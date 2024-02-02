@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# openapi boilerplate files
+src/clients/fv1/.openapi-generator-ignore
+src/clients/fv1/.npmignore
+src/clients/fv1/.openapi-generator
+src/clients/fv1/git_push.sh
+src/clients/fv1/.gitignore
