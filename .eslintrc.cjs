@@ -12,6 +12,7 @@ module.exports = {
   plugins: ['react-refresh', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    '@typescript-eslint/explicit-member-accessibility': 'warn',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

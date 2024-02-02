@@ -8,13 +8,16 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "update_client": "npx @openapitools/openapi-generator-cli generate -g typescript-axios -o src/clients/fv1 --enable-post-process-file --global-property skipFormModel=false --type-mappings DateTime=Date -i ~/Downloads/tmp/docs-json.json && prettier --write"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.7",
     "axios": "^1.6.7",
+    "axios-retry": "^4.0.0",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
