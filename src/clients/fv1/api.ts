@@ -36,6 +36,36 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  *
  * @export
+ * @interface BaseErrorResponseDto
+ */
+export interface BaseErrorResponseDto {
+  /**
+   *
+   * @type {ErrorCodesEnum}
+   * @memberof BaseErrorResponseDto
+   */
+  code: ErrorCodesEnum;
+}
+
+/**
+ *
+ * @export
+ * @enum {string}
+ */
+
+export const ErrorCodesEnum = {
+  InvalidCredentials: 'invalidCredentials',
+  UserExists: 'userExists',
+  WeakPassword: 'weakPassword',
+  UnknownError: 'unknownError',
+  InvalidPayload: 'invalidPayload',
+} as const;
+
+export type ErrorCodesEnum = (typeof ErrorCodesEnum)[keyof typeof ErrorCodesEnum];
+
+/**
+ *
+ * @export
  * @interface GetAudioUrlResp
  */
 export interface GetAudioUrlResp {

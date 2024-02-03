@@ -6,7 +6,7 @@ describe('<HelpScreen />', () => {
     cy.clock();
     // see: https://on.cypress.io/mounting-react
     cy.mount(
-      <TestAppProvider value={{}}>
+      <TestAppProvider override={{}}>
         <App />
       </TestAppProvider>,
     );

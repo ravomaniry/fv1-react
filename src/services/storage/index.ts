@@ -1,32 +1,32 @@
 import { UiUserModel, UserTokens } from '../../clients/fv1';
-import { UiUserTokens } from '../../models/userTokents';
+import { UiUserTokens } from '../../models/userTokens';
+
+export const tokenKey = 'e078cb80';
+export const userKey = 'd53965678';
 
 export class StorageService {
-  private readonly refreshTokenKey = 'e078cb80';
-  private readonly userKey = 'd53965678';
-
   public async getTokens(): Promise<UiUserTokens | null> {
-    return this.get(this.refreshTokenKey, (d) => new UiUserTokens(JSON.parse(d)));
+    return this.get(tokenKey, (d) => new UiUserTokens(JSON.parse(d)));
   }
 
   public saveTokens(tokens: UserTokens): void {
-    localStorage.setItem(this.refreshTokenKey, JSON.stringify(tokens));
+    localStorage.setItem(tokenKey, JSON.stringify(tokens));
   }
 
   public getUser(): UiUserModel | null {
-    return this.get(this.userKey, JSON.parse);
+    return this.get(userKey, JSON.parse);
   }
 
   public saveUser(user: UiUserModel): void {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
+    localStorage.setItem(userKey, JSON.stringify(user));
   }
 
   public deleteToken(): void {
-    localStorage.removeItem(this.refreshTokenKey);
+    localStorage.removeItem(tokenKey);
   }
 
   public deleteUser(): void {
-    localStorage.removeItem(this.userKey);
+    localStorage.removeItem(userKey);
   }
 
   private get<T>(key: string, create: (map: string) => T): T | null {

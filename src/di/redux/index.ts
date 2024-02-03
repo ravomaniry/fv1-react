@@ -1,15 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import appSlice, { AppSlice } from './appSlice';
-import { UseSelector, useSelector } from 'react-redux';
+import appSlice from './appSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export interface ReduxState {
-  app: AppSlice;
-}
-
-export default configureStore({
+const store = configureStore({
   reducer: {
     app: appSlice,
   },
 });
 
-export const useAppSelector: UseSelector<ReduxState> = useSelector;
+type AppState = ReturnType<typeof store.getState>;
+type AppDispatch = typeof store.dispatch;
+
+export const useAppSelector = useSelector.withTypes<AppState>();
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppTexts = () => useAppSelector((s) => s.app.texts);
+
+export default store;

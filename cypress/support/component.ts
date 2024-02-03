@@ -39,7 +39,7 @@ declare global {
 
 Cypress.Commands.add('mount', mount);
 Cypress.Commands.add('getByDataCy', (id: string) => {
-  return cy.get(`[data-cy=${JSON.stringify(id)}]`).first() as any;
+  return cy.get(`[data-cy=${JSON.stringify(id)}]`) as any;
 });
 
 // Example use:

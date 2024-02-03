@@ -2,7 +2,7 @@ import { StorageService } from '../storage';
 import { NotConnectedException } from '../../types/exceptions';
 import { Logger } from '../../lib/logger';
 import { LoginRequestDto, LoginResponseDto, RegisterRequestDto, UiUserModel } from '../../clients/fv1';
-import { UiUserTokens } from '../../models/userTokents';
+import { UiUserTokens } from '../../models/userTokens';
 import { AxiosRequest } from '../../types/axiosRequest';
 import { AuthClient } from './authClient';
 
@@ -37,11 +37,16 @@ export class AuthService {
   }
 
   private async handleLogin(fn: AxiosRequest<LoginResponseDto>): Promise<UiUserModel> {
-    const resp = await fn();
-    this.tokens = new UiUserTokens(resp.data.tokens);
-    this._saveTokens();
-    this.storage.saveUser(resp.data.user);
-    return resp.data.user;
+    try {
+      const resp = await fn();
+      this.tokens = new UiUserTokens(resp.data.tokens);
+      this._saveTokens();
+      this.storage.saveUser(resp.data.user);
+      return resp.data.user;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
   }
 
   private async _refreshExpiredToken(): Promise<void> {
