@@ -1,4 +1,6 @@
 export interface AppTexts {
+  title1: string;
+  title2: string;
   appSlogan: string;
   continueButton: string;
   login: string;
@@ -40,6 +42,8 @@ export interface AppTexts {
 }
 
 export const mgTexts: AppTexts = {
+  title1: 'fitiavana',
+  title2: 'voalohany',
   appSlogan: '... fa ny fahasoavana sy ny fahamarinana kosa dia tonga tamin’ ny alalan’ i Jesosy Kristy - Jaona 1:17',
   continueButton: 'TOHIZANA',
   login: 'HIDITRA',

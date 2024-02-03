@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { theme } from './ui/theme.ts';
+import { theme } from './ui/theme';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './di/appContext/index.tsx';
 import { Provider } from 'react-redux';

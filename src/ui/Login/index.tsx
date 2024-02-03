@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useAppDispatch, useAppTexts } from '../../di/redux';
 import LoginError from '../widgets/LoginError';
 import HomePageContainer from '../widgets/HomePageContainer';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { routes } from '../routes';
 import LoginForm, { FormValues } from './LoginForm';
@@ -39,14 +39,23 @@ export default function LoginScreen() {
   const { onSubmit } = useLogin();
   return (
     <HomePageContainer>
-      <LoginForm onSubmit={onSubmit} />
-      <Typography variant='subtitle1'>{texts.noAccountYet}</Typography>
-      <Link to={routes.register}>
-        <Button variant='outlined'>{texts.createAccount}</Button>
-      </Link>
-      <Typography>{texts.or}</Typography>
-      <Button variant='outlined'>{texts.continueAsGuest}</Button>
-      <LoginError />
+      <Box textAlign='center'>
+        <Typography variant='subtitle1' textAlign='center'>
+          {texts.loginTitle}
+        </Typography>
+        <LoginForm onSubmit={onSubmit} />
+        <Typography component='div' variant='caption'>
+          {texts.noAccountYet}
+        </Typography>
+        <Link to={routes.register}>
+          <Button variant='outlined'>{texts.createAccount}</Button>
+        </Link>
+        <Typography component='div' variant='caption'>
+          {texts.or}
+        </Typography>
+        <Button variant='outlined'>{texts.continueAsGuest}</Button>
+        <LoginError />
+      </Box>
       <HelpButton />
     </HomePageContainer>
   );

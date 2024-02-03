@@ -34,6 +34,7 @@ export default function LoginForm({ onSubmit }: Props) {
         <form data-cy='loginScreen' onSubmit={handleSubmit}>
           <Box>
             <TextField
+              fullWidth
               inputProps={{ 'data-cy': 'username' }}
               name='username'
               label={texts.username}
@@ -43,6 +44,7 @@ export default function LoginForm({ onSubmit }: Props) {
           </Box>
           <Box marginTop={2} marginBottom={2}>
             <TextField
+              fullWidth
               inputProps={{ 'data-cy': 'password' }}
               name='password'
               label={texts.password}
@@ -51,7 +53,7 @@ export default function LoginForm({ onSubmit }: Props) {
             <FormikFieldError name='password' />
           </Box>
           <Button variant='contained' type='submit' data-cy='LoginButton'>
-            {texts.continueButton}
+            {texts.login}
           </Button>
         </form>
       )}
