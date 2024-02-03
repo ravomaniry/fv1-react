@@ -9,7 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky",
-    "update_client": "npx @openapitools/openapi-generator-cli generate -g typescript-axios -o src/clients/fv1 --enable-post-process-file --global-property skipFormModel=false --type-mappings DateTime=Date -i ~/Downloads/tmp/docs-json.json && prettier --write src/clients"
+    "update_client": "npx @openapitools/openapi-generator-cli generate -g typescript-axios -o src/clients/fv1 --enable-post-process-file --global-property skipFormModel=false --type-mappings DateTime=Date -i ~/Downloads/tmp/docs-json.json && prettier --write src/clients",
+    "test": "npm run dev",
+    "cypress":"cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",

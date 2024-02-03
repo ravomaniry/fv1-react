@@ -5,6 +5,8 @@ import FormikFieldError from '../widgets/FormikFieldError';
 import { useAppTexts } from '../../di/redux';
 
 interface Props {
+  disabled: boolean;
+  submitButtonLabel: string;
   onSubmit: (v: FormValues) => void;
 }
 
@@ -26,12 +28,12 @@ const validationSchema = yup
   })
   .required();
 
-export default function LoginForm({ onSubmit }: Props) {
+export default function LoginForm({ disabled, submitButtonLabel, onSubmit }: Props) {
   const texts = useAppTexts();
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ handleChange, handleSubmit }) => (
-        <form data-cy='loginScreen' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Box>
             <TextField
               fullWidth
@@ -39,6 +41,7 @@ export default function LoginForm({ onSubmit }: Props) {
               name='username'
               label={texts.username}
               onChange={handleChange}
+              disabled={disabled}
             />
             <FormikFieldError name='username' />
           </Box>
@@ -49,11 +52,12 @@ export default function LoginForm({ onSubmit }: Props) {
               name='password'
               label={texts.password}
               onChange={handleChange}
+              disabled={disabled}
             />
             <FormikFieldError name='password' />
           </Box>
-          <Button variant='contained' type='submit' data-cy='LoginButton'>
-            {texts.login}
+          <Button disabled={disabled} variant='contained' type='submit' data-cy='LoginButton'>
+            {submitButtonLabel}
           </Button>
         </form>
       )}
