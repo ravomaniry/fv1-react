@@ -1,17 +1,17 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Home';
-import TeachingSummary from './TeachingSummary';
-import Chapter from './Chapter';
-import Quiz from './Quiz';
-import Score from './Score';
-import Explorer from './Explorer';
-import Login from './Login';
-import Register from './Register';
-import Help from './Help';
 import { useAppSelector } from '../di/redux';
 import { Logger } from '../lib/logger';
-import { ReactNode } from 'react';
+import { ReactNode, lazy } from 'react';
 import { routes } from './routes';
+const TeachingSummary = lazy(() => import('./TeachingSummary'));
+const Chapter = lazy(() => import('./Chapter'));
+const Quiz = lazy(() => import('./Quiz'));
+const Score = lazy(() => import('./Score'));
+const Explorer = lazy(() => import('./Explorer'));
+const Login = lazy(() => import('./Login'));
+const Register = lazy(() => import('./Register'));
+const Help = lazy(() => import('./Help'));
 
 const logger = new Logger('AppRouter');
 

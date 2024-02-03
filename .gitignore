@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env.development
+.env.production
 
 # openapi boilerplate files
 src/clients/fv1/.openapi-generator-ignore
