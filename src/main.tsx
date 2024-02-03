@@ -7,21 +7,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './di/appContext/index.tsx';
 import { Provider } from 'react-redux';
 import store from './di/redux/index.ts';
-import ServicesProvider from './di/services/index.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      <ServicesProvider>
-        <AppContextProvider>
-          <BrowserRouter>
-            <Provider store={store}>
-              <App />
-            </Provider>
-          </BrowserRouter>
-        </AppContextProvider>
-      </ServicesProvider>
+      <AppContextProvider>
+        <BrowserRouter>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </BrowserRouter>
+      </AppContextProvider>
     </ThemeProvider>
   </React.StrictMode>,
 );
