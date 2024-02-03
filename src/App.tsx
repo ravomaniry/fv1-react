@@ -1,12 +1,7 @@
-import { AppContextProvider } from './di/appContext';
-import Home from './ui/home';
+import AppRouter from './ui/router';
 
 function App() {
-  return (
-    <AppContextProvider>
-      <Home />
-    </AppContextProvider>
-  );
+  return <AppRouter />;
 }
 
 export default App;

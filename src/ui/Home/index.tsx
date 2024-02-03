@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useAppContext } from '../di/appContext/useAppContext';
+import { useAppContext } from '../../di/appContext/useAppContext';
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   const { authService, apiClient } = useAppContext();
@@ -29,6 +30,11 @@ export default function Home() {
       >
         {'Test list teachings'}
       </Button>
+      <div>
+        <Link to='help'>
+          <Button>Go to help</Button>
+        </Link>
+      </div>
       <pre>{JSON.stringify(resp, null, 2)}</pre>
     </div>
   );

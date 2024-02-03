@@ -16,6 +16,7 @@ export function AppContextProvider({ children }: PropsWithChildren<unknown>) {
       texts: mgTexts,
       apiClient,
       authService,
+      user: storageService.getUser(),
     };
   }, []);
   return <Context.Provider value={value}>{children}</Context.Provider>;
