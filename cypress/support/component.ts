@@ -21,6 +21,8 @@ import './commands';
 
 import { mount } from 'cypress/react18';
 
+type TypeOfGet = typeof cy.get;
+
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts
@@ -30,11 +32,15 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
+      getByDataCy: TypeOfGet;
     }
   }
 }
 
 Cypress.Commands.add('mount', mount);
+Cypress.Commands.add('getByDataCy', (id: string) => {
+  return cy.get(`[data-cy=${JSON.stringify(id)}]`).first() as any;
+});
 
 // Example use:
 // cy.mount(<MyComponent />)

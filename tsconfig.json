@@ -27,7 +27,8 @@
     "noImplicitOverride": true
   },
   "include": [
-    "src"
+    "src",
+    "cypress"
   ],
   "references": [
     {

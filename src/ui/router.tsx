@@ -11,20 +11,8 @@ import Help from './Help';
 import { useAppContext } from '../di/appContext/useAppContext';
 import { Logger } from '../lib/logger';
 import { ReactNode } from 'react';
+import { routes } from './routes';
 
-const routes = {
-  home: '/',
-  login: '/login',
-  register: 'register',
-  teachingSummary: 'teaching',
-  chapter: 'chapter',
-  quiz: 'quiz',
-  score: 'score',
-  explorer: 'explorer',
-  teachingIdKey: 'teachingId',
-  chapterIndexKey: 'chapterIndex',
-  help: '/help',
-};
 const logger = new Logger('AppRouter');
 
 function Guard({ component }: { component: ReactNode }) {
