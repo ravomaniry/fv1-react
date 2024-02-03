@@ -2,8 +2,8 @@ import { UiUserModel, UserTokens } from '../../clients/fv1';
 import { UiUserTokens } from '../../models/userTokents';
 
 export class StorageService {
-  private readonly refreshTokenKey = 'refresh_token';
-  private readonly userKey = 'user';
+  private readonly refreshTokenKey = 'e078cb80';
+  private readonly userKey = 'd53965678';
 
   public async getTokens(): Promise<UiUserTokens | null> {
     return this.get(this.refreshTokenKey, (d) => new UiUserTokens(JSON.parse(d)));

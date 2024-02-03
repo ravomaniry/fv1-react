@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky",
-    "update_client": "npx @openapitools/openapi-generator-cli generate -g typescript-axios -o src/clients/fv1 --enable-post-process-file --global-property skipFormModel=false --type-mappings DateTime=Date -i ~/Downloads/tmp/docs-json.json && prettier --write"
+    "update_client": "npx @openapitools/openapi-generator-cli generate -g typescript-axios -o src/clients/fv1 --enable-post-process-file --global-property skipFormModel=false --type-mappings DateTime=Date -i ~/Downloads/tmp/docs-json.json && prettier --write src/clients"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -36,7 +36,6 @@
     "lint-staged": "^15.2.1",
     "prettier": "^3.2.4",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "vitest": "^1.2.2"
+    "vite": "^5.0.8"
   }
 }

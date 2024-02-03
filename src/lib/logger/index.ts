@@ -25,6 +25,6 @@ export class Logger {
   }
 
   private log(level: LogLevel, ...messages: unknown[]) {
-    console.log({ context: this.context, level }, ...messages);
+    console.log(`${level} | ${new Date().getTime()} | ${this.context} |`, ...messages);
   }
 }

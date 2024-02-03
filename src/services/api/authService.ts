@@ -62,7 +62,7 @@ export class AuthService {
 
   public async getAccessToken(): Promise<string> {
     this.tokens = this.tokens || (await this.storage.getTokens());
-    this.logger.info(`Token from local storage: ${this.tokens !== undefined}`);
+    this.logger.info(`Token from local storage: ${this.tokens !== null}`);
     if (!this.tokens) {
       throw new NotConnectedException();
     }

@@ -357,13 +357,14 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
   return {
     /**
      *
+     * @summary
      * @param {string} key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    audioControllerGetUrl: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+    getUrl: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       // verify required parameter 'key' is not null or undefined
-      assertParamExists('audioControllerGetUrl', 'key', key);
+      assertParamExists('getUrl', 'key', key);
       const localVarPath = `/api/audio/url/{key}`.replace(`{${'key'}}`, encodeURIComponent(String(key)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -401,17 +402,18 @@ export const AudioApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @summary
      * @param {string} key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async audioControllerGetUrl(
+    async getUrl(
       key: string,
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAudioUrlResp>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.audioControllerGetUrl(key, options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getUrl(key, options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['AudioApi.audioControllerGetUrl']?.[index]?.url;
+      const operationBasePath = operationServerMap['AudioApi.getUrl']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -432,12 +434,13 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
   return {
     /**
      *
+     * @summary
      * @param {string} key
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    audioControllerGetUrl(key: string, options?: any): AxiosPromise<GetAudioUrlResp> {
-      return localVarFp.audioControllerGetUrl(key, options).then((request) => request(axios, basePath));
+    getUrl(key: string, options?: any): AxiosPromise<GetAudioUrlResp> {
+      return localVarFp.getUrl(key, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -451,14 +454,15 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
 export class AudioApi extends BaseAPI {
   /**
    *
+   * @summary
    * @param {string} key
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof AudioApi
    */
-  public audioControllerGetUrl(key: string, options?: RawAxiosRequestConfig) {
+  public getUrl(key: string, options?: RawAxiosRequestConfig) {
     return AudioApiFp(this.configuration)
-      .audioControllerGetUrl(key, options)
+      .getUrl(key, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -918,10 +922,11 @@ export const ProgressApiAxiosParamCreator = function (configuration?: Configurat
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerGetProgresses: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+    getProgresses: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       const localVarPath = `/api/progress`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -949,20 +954,21 @@ export const ProgressApiAxiosParamCreator = function (configuration?: Configurat
     },
     /**
      *
+     * @summary
      * @param {number} id
      * @param {SaveProgressReqDto} saveProgressReqDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerSave: async (
+    save: async (
       id: number,
       saveProgressReqDto: SaveProgressReqDto,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
-      assertParamExists('progressControllerSave', 'id', id);
+      assertParamExists('save', 'id', id);
       // verify required parameter 'saveProgressReqDto' is not null or undefined
-      assertParamExists('progressControllerSave', 'saveProgressReqDto', saveProgressReqDto);
+      assertParamExists('save', 'saveProgressReqDto', saveProgressReqDto);
       const localVarPath = `/api/progress/save/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(id)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -993,16 +999,14 @@ export const ProgressApiAxiosParamCreator = function (configuration?: Configurat
     },
     /**
      *
+     * @summary
      * @param {StartRequestDto} startRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerStart: async (
-      startRequestDto: StartRequestDto,
-      options: RawAxiosRequestConfig = {},
-    ): Promise<RequestArgs> => {
+    start: async (startRequestDto: StartRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       // verify required parameter 'startRequestDto' is not null or undefined
-      assertParamExists('progressControllerStart', 'startRequestDto', startRequestDto);
+      assertParamExists('start', 'startRequestDto', startRequestDto);
       const localVarPath = `/api/progress/start`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1033,20 +1037,21 @@ export const ProgressApiAxiosParamCreator = function (configuration?: Configurat
     },
     /**
      *
+     * @summary
      * @param {number} id
      * @param {SaveProgressReqDto} saveProgressReqDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerSync: async (
+    sync: async (
       id: number,
       saveProgressReqDto: SaveProgressReqDto,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
-      assertParamExists('progressControllerSync', 'id', id);
+      assertParamExists('sync', 'id', id);
       // verify required parameter 'saveProgressReqDto' is not null or undefined
-      assertParamExists('progressControllerSync', 'saveProgressReqDto', saveProgressReqDto);
+      assertParamExists('sync', 'saveProgressReqDto', saveProgressReqDto);
       const localVarPath = `/api/progress/sync/{id}`.replace(`{${'id'}}`, encodeURIComponent(String(id)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1087,15 +1092,16 @@ export const ProgressApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async progressControllerGetProgresses(
+    async getProgresses(
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProgressEntity>>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.progressControllerGetProgresses(options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getProgresses(options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['ProgressApi.progressControllerGetProgresses']?.[index]?.url;
+      const operationBasePath = operationServerMap['ProgressApi.getProgresses']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -1106,19 +1112,20 @@ export const ProgressApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @summary
      * @param {number} id
      * @param {SaveProgressReqDto} saveProgressReqDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async progressControllerSave(
+    async save(
       id: number,
       saveProgressReqDto: SaveProgressReqDto,
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.progressControllerSave(id, saveProgressReqDto, options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.save(id, saveProgressReqDto, options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['ProgressApi.progressControllerSave']?.[index]?.url;
+      const operationBasePath = operationServerMap['ProgressApi.save']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -1129,17 +1136,18 @@ export const ProgressApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @summary
      * @param {StartRequestDto} startRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async progressControllerStart(
+    async start(
       startRequestDto: StartRequestDto,
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgressEntity>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.progressControllerStart(startRequestDto, options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.start(startRequestDto, options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['ProgressApi.progressControllerStart']?.[index]?.url;
+      const operationBasePath = operationServerMap['ProgressApi.start']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -1150,19 +1158,20 @@ export const ProgressApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @summary
      * @param {number} id
      * @param {SaveProgressReqDto} saveProgressReqDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async progressControllerSync(
+    async sync(
       id: number,
       saveProgressReqDto: SaveProgressReqDto,
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.progressControllerSync(id, saveProgressReqDto, options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.sync(id, saveProgressReqDto, options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['ProgressApi.progressControllerSync']?.[index]?.url;
+      const operationBasePath = operationServerMap['ProgressApi.sync']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -1183,44 +1192,44 @@ export const ProgressApiFactory = function (configuration?: Configuration, baseP
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerGetProgresses(options?: any): AxiosPromise<Array<ProgressEntity>> {
-      return localVarFp.progressControllerGetProgresses(options).then((request) => request(axios, basePath));
+    getProgresses(options?: any): AxiosPromise<Array<ProgressEntity>> {
+      return localVarFp.getProgresses(options).then((request) => request(axios, basePath));
     },
     /**
      *
+     * @summary
      * @param {number} id
      * @param {SaveProgressReqDto} saveProgressReqDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerSave(id: number, saveProgressReqDto: SaveProgressReqDto, options?: any): AxiosPromise<void> {
-      return localVarFp
-        .progressControllerSave(id, saveProgressReqDto, options)
-        .then((request) => request(axios, basePath));
+    save(id: number, saveProgressReqDto: SaveProgressReqDto, options?: any): AxiosPromise<void> {
+      return localVarFp.save(id, saveProgressReqDto, options).then((request) => request(axios, basePath));
     },
     /**
      *
+     * @summary
      * @param {StartRequestDto} startRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerStart(startRequestDto: StartRequestDto, options?: any): AxiosPromise<ProgressEntity> {
-      return localVarFp.progressControllerStart(startRequestDto, options).then((request) => request(axios, basePath));
+    start(startRequestDto: StartRequestDto, options?: any): AxiosPromise<ProgressEntity> {
+      return localVarFp.start(startRequestDto, options).then((request) => request(axios, basePath));
     },
     /**
      *
+     * @summary
      * @param {number} id
      * @param {SaveProgressReqDto} saveProgressReqDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    progressControllerSync(id: number, saveProgressReqDto: SaveProgressReqDto, options?: any): AxiosPromise<void> {
-      return localVarFp
-        .progressControllerSync(id, saveProgressReqDto, options)
-        .then((request) => request(axios, basePath));
+    sync(id: number, saveProgressReqDto: SaveProgressReqDto, options?: any): AxiosPromise<void> {
+      return localVarFp.sync(id, saveProgressReqDto, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -1234,54 +1243,58 @@ export const ProgressApiFactory = function (configuration?: Configuration, baseP
 export class ProgressApi extends BaseAPI {
   /**
    *
+   * @summary
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ProgressApi
    */
-  public progressControllerGetProgresses(options?: RawAxiosRequestConfig) {
+  public getProgresses(options?: RawAxiosRequestConfig) {
     return ProgressApiFp(this.configuration)
-      .progressControllerGetProgresses(options)
+      .getProgresses(options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
+   * @summary
    * @param {number} id
    * @param {SaveProgressReqDto} saveProgressReqDto
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ProgressApi
    */
-  public progressControllerSave(id: number, saveProgressReqDto: SaveProgressReqDto, options?: RawAxiosRequestConfig) {
+  public save(id: number, saveProgressReqDto: SaveProgressReqDto, options?: RawAxiosRequestConfig) {
     return ProgressApiFp(this.configuration)
-      .progressControllerSave(id, saveProgressReqDto, options)
+      .save(id, saveProgressReqDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
+   * @summary
    * @param {StartRequestDto} startRequestDto
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ProgressApi
    */
-  public progressControllerStart(startRequestDto: StartRequestDto, options?: RawAxiosRequestConfig) {
+  public start(startRequestDto: StartRequestDto, options?: RawAxiosRequestConfig) {
     return ProgressApiFp(this.configuration)
-      .progressControllerStart(startRequestDto, options)
+      .start(startRequestDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
+   * @summary
    * @param {number} id
    * @param {SaveProgressReqDto} saveProgressReqDto
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof ProgressApi
    */
-  public progressControllerSync(id: number, saveProgressReqDto: SaveProgressReqDto, options?: RawAxiosRequestConfig) {
+  public sync(id: number, saveProgressReqDto: SaveProgressReqDto, options?: RawAxiosRequestConfig) {
     return ProgressApiFp(this.configuration)
-      .progressControllerSync(id, saveProgressReqDto, options)
+      .sync(id, saveProgressReqDto, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -1294,10 +1307,11 @@ export const SanityCheckApiAxiosParamCreator = function (configuration?: Configu
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    sanityCheckControllerSanityCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+    sanityCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       const localVarPath = `/api/sanity-check`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1331,15 +1345,16 @@ export const SanityCheckApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async sanityCheckControllerSanityCheck(
+    async sanityCheck(
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.sanityCheckControllerSanityCheck(options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.sanityCheck(options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['SanityCheckApi.sanityCheckControllerSanityCheck']?.[index]?.url;
+      const operationBasePath = operationServerMap['SanityCheckApi.sanityCheck']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -1364,11 +1379,12 @@ export const SanityCheckApiFactory = function (
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    sanityCheckControllerSanityCheck(options?: any): AxiosPromise<void> {
-      return localVarFp.sanityCheckControllerSanityCheck(options).then((request) => request(axios, basePath));
+    sanityCheck(options?: any): AxiosPromise<void> {
+      return localVarFp.sanityCheck(options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -1382,13 +1398,14 @@ export const SanityCheckApiFactory = function (
 export class SanityCheckApi extends BaseAPI {
   /**
    *
+   * @summary
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof SanityCheckApi
    */
-  public sanityCheckControllerSanityCheck(options?: RawAxiosRequestConfig) {
+  public sanityCheck(options?: RawAxiosRequestConfig) {
     return SanityCheckApiFp(this.configuration)
-      .sanityCheckControllerSanityCheck(options)
+      .sanityCheck(options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -1401,10 +1418,11 @@ export const TeachingApiAxiosParamCreator = function (configuration?: Configurat
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    teachingControllerGetNew: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+    getNew: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       const localVarPath = `/api/teaching/new`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1442,15 +1460,16 @@ export const TeachingApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async teachingControllerGetNew(
+    async getNew(
       options?: RawAxiosRequestConfig,
     ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TeachingEntity>>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.teachingControllerGetNew(options);
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getNew(options);
       const index = configuration?.serverIndex ?? 0;
-      const operationBasePath = operationServerMap['TeachingApi.teachingControllerGetNew']?.[index]?.url;
+      const operationBasePath = operationServerMap['TeachingApi.getNew']?.[index]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -1471,11 +1490,12 @@ export const TeachingApiFactory = function (configuration?: Configuration, baseP
   return {
     /**
      *
+     * @summary
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    teachingControllerGetNew(options?: any): AxiosPromise<Array<TeachingEntity>> {
-      return localVarFp.teachingControllerGetNew(options).then((request) => request(axios, basePath));
+    getNew(options?: any): AxiosPromise<Array<TeachingEntity>> {
+      return localVarFp.getNew(options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -1489,13 +1509,14 @@ export const TeachingApiFactory = function (configuration?: Configuration, baseP
 export class TeachingApi extends BaseAPI {
   /**
    *
+   * @summary
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof TeachingApi
    */
-  public teachingControllerGetNew(options?: RawAxiosRequestConfig) {
+  public getNew(options?: RawAxiosRequestConfig) {
     return TeachingApiFp(this.configuration)
-      .teachingControllerGetNew(options)
+      .getNew(options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

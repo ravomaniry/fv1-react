@@ -1,12 +1,9 @@
-import axios from 'axios';
 import { AuthApiFactory } from '../../clients/fv1';
-import axiosRetry, { exponentialDelay } from 'axios-retry';
+import { createCommonAxiosInstance } from './axios';
 
-const instance = axios.create();
-axiosRetry(instance, {
-  retryDelay: exponentialDelay,
-  retryCondition: (error) => Boolean(error.code) && error.status! >= 410,
-});
+export function createAuthClient(baseURL: string) {
+  const axios = createCommonAxiosInstance({ baseURL });
+  return AuthApiFactory(undefined, undefined, axios);
+}
 
-export const authClient = AuthApiFactory();
-export type AuthClient = typeof authClient;
+export type AuthClient = ReturnType<typeof AuthApiFactory>;

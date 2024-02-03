@@ -22,6 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env.development
 
 # openapi boilerplate files
 src/clients/fv1/.openapi-generator-ignore
