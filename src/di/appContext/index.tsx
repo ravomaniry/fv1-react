@@ -1,5 +1,4 @@
 import { PropsWithChildren, useMemo } from 'react';
-import { mgTexts } from '../../models/texts';
 import { createApiClient } from '../../services/api';
 import { AuthService } from '../../services/api/authService';
 import { StorageService } from '../../services/storage';
@@ -13,10 +12,8 @@ export function AppContextProvider({ children }: PropsWithChildren<unknown>) {
     const authService = new AuthService(storageService, createAuthClient(config.apiBaseURL));
     const apiClient = createApiClient(authService, config.apiBaseURL);
     return {
-      texts: mgTexts,
       apiClient,
       authService,
-      user: storageService.getUser(),
     };
   }, []);
   return <Context.Provider value={value}>{children}</Context.Provider>;

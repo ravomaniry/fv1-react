@@ -8,7 +8,7 @@ import Explorer from './Explorer';
 import Login from './Login';
 import Register from './Register';
 import Help from './Help';
-import { useAppContext } from '../di/appContext/useAppContext';
+import { useAppSelector } from '../di/redux';
 import { Logger } from '../lib/logger';
 import { ReactNode } from 'react';
 import { routes } from './routes';
@@ -17,7 +17,7 @@ const logger = new Logger('AppRouter');
 
 function Guard({ component }: { component: ReactNode }) {
   const route = useMatch('');
-  const { user } = useAppContext();
+  const user = useAppSelector((state) => state.app.user);
   const isOnAuthPages = route?.pathname !== routes.login && route?.pathname !== routes.register;
   if (user && isOnAuthPages) {
     logger.debug('Redirecting to', routes.home);

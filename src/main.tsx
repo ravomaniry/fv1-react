@@ -5,6 +5,8 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from './ui/theme.ts';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './di/appContext/index.tsx';
+import { Provider } from 'react-redux';
+import store from './di/redux/index.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -12,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <AppContextProvider>
         <BrowserRouter>
-          <App />
+          <Provider store={store}>
+            <App />
+          </Provider>
         </BrowserRouter>
       </AppContextProvider>
     </ThemeProvider>
