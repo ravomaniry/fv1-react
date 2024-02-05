@@ -5,7 +5,7 @@ import { QuestionMarkRounded } from '@mui/icons-material';
 export default function HelpButton() {
   return (
     <AppFab href={routes.help}>
-      <QuestionMarkRounded fontSize='large' />
+      <QuestionMarkRounded fontSize='large' data-cy='HelpButton' />
     </AppFab>
   );
 }
