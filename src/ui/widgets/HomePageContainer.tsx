@@ -1,7 +1,11 @@
 import { Box, Card, CardContent, Stack, Typography, useTheme } from '@mui/material';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import ResponsivePadding from './ResponsivePadding';
 import { useAppTexts } from '../../di/redux';
+
+interface Props {
+  fab: ReactNode;
+}
 
 function Header() {
   const text = useAppTexts();
@@ -70,7 +74,7 @@ function Header() {
   );
 }
 
-export default function HomePageContainer({ children }: PropsWithChildren) {
+export default function HomePageContainer({ children, fab }: PropsWithChildren<Props>) {
   return (
     <Box display='flex' flexDirection='column' minHeight='100vh'>
       <Header />
@@ -85,6 +89,7 @@ export default function HomePageContainer({ children }: PropsWithChildren) {
           </Card>
         </ResponsivePadding>
       </Box>
+      {fab}
     </Box>
   );
 }

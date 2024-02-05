@@ -12,7 +12,7 @@ export default function LoginScreen() {
   const texts = useAppTexts();
   const { disabled, onSubmit, onRegisterGuest } = useLoginRegister();
   return (
-    <HomePageContainer>
+    <HomePageContainer fab={<HelpButton />}>
       <Box textAlign='center' data-cy='loginScreen'>
         <Typography variant='subtitle1' textAlign='center'>
           {texts.loginTitle}
@@ -34,7 +34,6 @@ export default function LoginScreen() {
         </Button>
         <LoginError />
       </Box>
-      <HelpButton />
     </HomePageContainer>
   );
 }

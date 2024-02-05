@@ -9,14 +9,13 @@ export default function RegisterScreen() {
   const { disabled, onRegister } = useLoginRegister();
   const texts = useAppTexts();
   return (
-    <HomePageContainer>
+    <HomePageContainer fab={<HelpButton />}>
       <Box data-cy='RegisterScreen' textAlign='center'>
         <Typography variant='subtitle1' textAlign='center'>
           {texts.createAccount}
         </Typography>
         <LoginForm disabled={disabled} submitButtonLabel={texts.continueButton} onSubmit={onRegister} />
       </Box>
-      <HelpButton />
     </HomePageContainer>
   );
 }

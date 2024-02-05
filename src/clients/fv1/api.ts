@@ -20,7 +20,10 @@ import globalAxios from 'axios';
 import {
   DUMMY_BASE_URL,
   assertParamExists,
+  setApiKeyToObject,
+  setBasicAuthToObject,
   setBearerAuthToObject,
+  setOAuthToObject,
   setSearchParams,
   serializeDataIfNeeded,
   toPathString,
@@ -110,6 +113,31 @@ export interface LoginResponseDto {
    * @memberof LoginResponseDto
    */
   tokens: UserTokens;
+}
+/**
+ *
+ * @export
+ * @interface NewTeachingRespDto
+ */
+export interface NewTeachingRespDto {
+  /**
+   *
+   * @type {number}
+   * @memberof NewTeachingRespDto
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof NewTeachingRespDto
+   */
+  title: string;
+  /**
+   *
+   * @type {string}
+   * @memberof NewTeachingRespDto
+   */
+  subtitle: string;
 }
 /**
  *
@@ -1493,7 +1521,7 @@ export const TeachingApiFp = function (configuration?: Configuration) {
      */
     async getNew(
       options?: RawAxiosRequestConfig,
-    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TeachingEntity>>> {
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NewTeachingRespDto>>> {
       const localVarAxiosArgs = await localVarAxiosParamCreator.getNew(options);
       const index = configuration?.serverIndex ?? 0;
       const operationBasePath = operationServerMap['TeachingApi.getNew']?.[index]?.url;
@@ -1521,7 +1549,7 @@ export const TeachingApiFactory = function (configuration?: Configuration, baseP
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getNew(options?: any): AxiosPromise<Array<TeachingEntity>> {
+    getNew(options?: any): AxiosPromise<Array<NewTeachingRespDto>> {
       return localVarFp.getNew(options).then((request) => request(axios, basePath));
     },
   };

@@ -3,7 +3,7 @@ import { UiUserTokens } from '../../src/models/userTokens';
 import { tokenKey, userKey } from '../../src/services/storage';
 import { createAccessToken } from '../support/createAccessToken';
 
-describe('template spec', () => {
+describe('Auth screen', () => {
   const accessTk = createAccessToken(new Date());
 
   beforeEach(() => {
@@ -38,17 +38,17 @@ describe('template spec', () => {
     cy.getByDataCy('LoginButton').click();
     cy.getByDataCy('LoginError').should('not.exist');
     // Save data and go to home screen
-    cy.getByDataCy('HomeScreen').should('exist');
-    cy.getAllLocalStorage().then((storage) => {
-      const current = storage[Object.keys(storage)[0]];
-      expect(JSON.parse(current[userKey] as string)).to.deep.equal({ id: 1, username: 'user1' });
-      expect(JSON.parse(current[tokenKey] as string)).to.deep.equal(
-        new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
-      );
-    });
+    cy.getByDataCy('HomeScreen')
+      .should('exist')
+      .then(() => {
+        expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 1, username: 'user1' });
+        expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
+          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+        );
+      });
   });
 
-  it('Creates new account', () => {
+  it('Register with username/password', () => {
     cy.intercept('POST', '/api/auth/register', {
       statusCode: 201,
       body: {
@@ -62,17 +62,17 @@ describe('template spec', () => {
     cy.getByDataCy('username').type('user2');
     cy.getByDataCy('password').type('pass1');
     cy.getByDataCy('LoginButton').click();
-    cy.getByDataCy('HomeScreen').should('exist');
-    cy.getAllLocalStorage().then((storage) => {
-      const current = storage[Object.keys(storage)[0]];
-      expect(JSON.parse(current[userKey] as string)).to.deep.equal({ id: 2, username: 'user2' });
-      expect(JSON.parse(current[tokenKey] as string)).to.deep.equal(
-        new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
-      );
-    });
+    cy.getByDataCy('HomeScreen')
+      .should('exist')
+      .then(() => {
+        expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 2, username: 'user2' });
+        expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
+          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+        );
+      });
   });
 
-  it('Log in as guest', () => {
+  it('Register as guest', () => {
     cy.intercept('POST', '/api/auth/register-guest', {
       statusCode: 201,
       body: {
@@ -81,13 +81,13 @@ describe('template spec', () => {
       },
     });
     cy.getByDataCy('RegisterGuestButton').click();
-    cy.getByDataCy('HomeScreen').should('exist');
-    cy.getAllLocalStorage().then((storage) => {
-      const current = storage[Object.keys(storage)[0]];
-      expect(JSON.parse(current[userKey] as string)).to.deep.equal({ id: 3, username: 'user3' });
-      expect(JSON.parse(current[tokenKey] as string)).to.deep.equal(
-        new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
-      );
-    });
+    cy.getByDataCy('HomeScreen')
+      .should('exist')
+      .then(() => {
+        expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 3, username: 'user3' });
+        expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
+          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+        );
+      });
   });
 });

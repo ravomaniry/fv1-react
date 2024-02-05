@@ -6,6 +6,9 @@ export const userKey = 'd53965678';
 
 export class StorageService {
   public async getTokens(): Promise<UiUserTokens | null> {
+    if (!this.storageStateIsValid()) {
+      return null;
+    }
     return this.get(tokenKey, (d) => new UiUserTokens(JSON.parse(d)));
   }
 
@@ -14,6 +17,9 @@ export class StorageService {
   }
 
   public getUser(): UiUserModel | null {
+    if (!this.storageStateIsValid()) {
+      return null;
+    }
     return this.get(userKey, JSON.parse);
   }
 
@@ -32,5 +38,9 @@ export class StorageService {
   private get<T>(key: string, create: (map: string) => T): T | null {
     const raw = localStorage.getItem(key);
     return raw === null ? null : create(raw);
+  }
+
+  private storageStateIsValid(): boolean {
+    return Boolean(localStorage.getItem(userKey) && localStorage.getItem(tokenKey));
   }
 }

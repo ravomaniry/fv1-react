@@ -12,13 +12,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      <AppContextProvider>
-        <BrowserRouter>
-          <Provider store={store}>
+      <Provider store={store}>
+        <AppContextProvider>
+          <BrowserRouter>
             <App />
-          </Provider>
-        </BrowserRouter>
-      </AppContextProvider>
+          </BrowserRouter>
+        </AppContextProvider>
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
 );
