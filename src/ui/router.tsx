@@ -32,17 +32,20 @@ function Redirect({ component }: { component: ReactNode }) {
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path={routes.home} element={<Redirect component={<Home />} />} />
       <Route path={routes.login} element={<Redirect component={<Login />} />} />
       <Route path={routes.register} element={<Redirect component={<Register />} />} />
-      <Route path='teaching/:teachingId' element={<Redirect component={<TeachingSummary />} />}>
-        <Route path='chapter/:chapterIndex' element={<Redirect component={<Chapter />} />}>
-          <Route path={routes.quiz} element={<Redirect component={<Quiz />} />} />
-          <Route path={routes.score} element={<Redirect component={<Score />} />} />
+      <Route path={routes.home}>
+        <Route path='' element={<Redirect component={<Home />} />} />
+        <Route path='teaching/:teachingId'>
+          <Route path='' element={<Redirect component={<TeachingSummary />} />} />
+          <Route path='chapter/:chapterIndex' element={<Redirect component={<Chapter />} />}>
+            <Route path={routes.quiz} element={<Redirect component={<Quiz />} />} />
+            <Route path={routes.score} element={<Redirect component={<Score />} />} />
+          </Route>
         </Route>
+        <Route path={routes.explorer} element={<Redirect component={<Explorer />} />} />
+        <Route path={routes.help} element={<Help />} />
       </Route>
-      <Route path={routes.explorer} element={<Redirect component={<Explorer />} />} />
-      <Route path={routes.help} element={<Help />} />
     </Routes>
   );
 }

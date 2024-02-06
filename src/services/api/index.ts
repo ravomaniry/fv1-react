@@ -1,4 +1,4 @@
-import { AudioApiFactory, ProgressApiFactory, TeachingApiFactory } from '../../clients/fv1';
+import { AudioApiFactory, Configuration, ProgressApiFactory, TeachingApiFactory } from '../../clients/fv1';
 import { AuthService } from './authService';
 import { createCommonAxiosInstance } from './axios';
 
@@ -10,14 +10,13 @@ export interface ApiClient {
 
 export function createApiClient(authService: AuthService, baseURL: string): ApiClient {
   const axios = createCommonAxiosInstance({ baseURL });
-  axios.interceptors.request.use(async (config) => {
-    const token = await authService.getAccessToken();
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
+  const config = new Configuration({
+    basePath: baseURL,
+    accessToken: () => authService.getAccessToken(),
   });
   return {
-    progress: ProgressApiFactory(undefined, undefined, axios),
-    teaching: TeachingApiFactory(undefined, undefined, axios),
-    audio: AudioApiFactory(undefined, undefined, axios),
+    progress: ProgressApiFactory(config, undefined, axios),
+    teaching: TeachingApiFactory(config, undefined, axios),
+    audio: AudioApiFactory(config, undefined, axios),
   };
 }

@@ -5,7 +5,7 @@ import { config } from '../../config';
 import { createAuthClient } from '../../services/api/authClient';
 import { AppContext, Context } from './context';
 import { StorageService } from '../../services/storage';
-import { setUser } from '../redux/appSlice';
+import { setIsInitialized, setUser } from '../redux/appSlice';
 import { useAppDispatch } from '../redux';
 
 export function AppContextProvider({ children }: PropsWithChildren<unknown>) {
@@ -16,6 +16,7 @@ export function AppContextProvider({ children }: PropsWithChildren<unknown>) {
     const authService = new AuthService(storageService, createAuthClient(config.apiBaseURL));
     const apiClient = createApiClient(authService, config.apiBaseURL);
     dispatch(setUser(storageService.getUser()));
+    dispatch(setIsInitialized());
     return {
       apiClient,
       authService,

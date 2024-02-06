@@ -26,5 +26,11 @@ export const theme = createTheme({
         },
       },
     },
+    MuiCard: {
+      defaultProps: {
+        elevation: 1,
+        sx: { marginBottom: 1 },
+      },
+    },
   },
 });

@@ -3,12 +3,14 @@ import { UiUserModel } from '../../clients/fv1';
 import { AppTexts, mgTexts } from '../../models/texts';
 
 export interface AppSlice {
+  isInitialized: boolean;
   user: UiUserModel | null;
   texts: AppTexts;
   error: string | null;
 }
 
 const initialState: AppSlice = {
+  isInitialized: false,
   user: null,
   texts: mgTexts,
   error: null,
@@ -24,8 +26,11 @@ const appSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+    setIsInitialized(state) {
+      state.isInitialized = true;
+    },
   },
 });
 
-export const { setUser, setError } = appSlice.actions;
+export const { setUser, setError, setIsInitialized } = appSlice.actions;
 export default appSlice.reducer;

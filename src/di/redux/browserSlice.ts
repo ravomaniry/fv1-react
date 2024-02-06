@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NewTeachingRespDto, ProgressEntity } from '../../clients/fv1';
+import { NewTeachingRespDto } from '../../clients/fv1';
+import { UiProgressModel } from '../../models/progress';
 
 export interface BrowserSlice {
-  progresses: ProgressEntity[] | null;
+  progresses: UiProgressModel[] | null;
   newTeachings: NewTeachingRespDto[] | null;
 }
 
@@ -15,7 +16,7 @@ const browserSlice = createSlice({
   name: 'browser',
   initialState,
   reducers: {
-    setProgresses(state, action: PayloadAction<ProgressEntity[]>) {
+    setProgresses(state, action: PayloadAction<UiProgressModel[]>) {
       state.progresses = action.payload;
     },
     setNewTeachings(state, action: PayloadAction<NewTeachingRespDto[]>) {

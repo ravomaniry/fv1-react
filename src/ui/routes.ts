@@ -7,7 +7,13 @@ export const routes = {
   quiz: 'quiz',
   score: 'score',
   explorer: 'explorer',
-  teachingIdKey: 'teachingId',
-  chapterIndexKey: 'chapterIndex',
   help: '/help',
 };
+
+export interface TeachingRouteParams {
+  teachingId: string;
+}
+
+export interface ChapterRouteParams extends TeachingRouteParams {
+  chapterIndex: string;
+}

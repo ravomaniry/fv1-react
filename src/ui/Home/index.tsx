@@ -3,15 +3,17 @@ import { useAppDispatch, useAppSelector, useAppTexts } from '../../di/redux';
 import { routes } from '../routes';
 import AppFab from '../widgets/Fab';
 import HomePageContainer from '../widgets/HomePageContainer';
-import WrapInLoader from '../widgets/WrapInloader';
-import { Box, Card, CardContent, Typography } from '@mui/material';
+import WrapInLoader from '../widgets/WrapInLoader';
+import { Box, Card, CardContent, LinearProgress, Typography } from '@mui/material';
 import { useCallOnMount } from '../hooks/useCallOnMount';
 import { useAppContext } from '../../di/appContext/useAppContext';
 import { setError } from '../../di/redux/appSlice';
 import { getErrorMessage } from '../../services/api/mapError';
 import { setProgresses } from '../../di/redux/browserSlice';
 import { useLoadNewTeachings } from '../Explorer/hooks';
-import { NewTeachingRespDto, ProgressEntity } from '../../clients/fv1';
+import { NewTeachingRespDto } from '../../clients/fv1';
+import { UiProgressModel } from '../../models/progress';
+import { Link } from 'react-router-dom';
 
 function useHome() {
   const texts = useAppTexts();
@@ -21,7 +23,7 @@ function useHome() {
   useCallOnMount(async () => {
     try {
       const progresses = await apiClient.progress.getProgresses();
-      dispatch(setProgresses(progresses.data));
+      dispatch(setProgresses(progresses.data.map((p) => new UiProgressModel(p))));
     } catch (error) {
       dispatch(setError(getErrorMessage(error, texts)));
     }
@@ -55,7 +57,7 @@ export default function Home() {
 function ExplorerButton() {
   return (
     <AppFab href={routes.explorer}>
-      <Search />
+      <Search data-cy='ExplorerButton' />
     </AppFab>
   );
 }
@@ -69,7 +71,7 @@ function RegularScreen({
   progresses,
   newTeachings,
 }: {
-  progresses: ProgressEntity[];
+  progresses: UiProgressModel[];
   newTeachings: NewTeachingRespDto[] | null;
 }) {
   const texts = useAppTexts();
@@ -77,13 +79,11 @@ function RegularScreen({
     <Box>
       {progresses.length > 0 && <Typography variant='subtitle2'>{texts.teachingsInProgress}</Typography>}
       {progresses.map((progress) => (
-        <Card>
-          <CardContent>Progress: {progress.teaching.title} </CardContent>
-        </Card>
+        <ProgressCard key={progress.id} progress={progress} />
       ))}
-      {newTeachings && <Typography variant='subtitle2'>{texts.teachingsAvailable}</Typography>}
+      {Boolean(newTeachings?.length) && <Typography variant='subtitle2'>{texts.teachingsAvailable}</Typography>}
       {newTeachings?.map((teaching) => (
-        <Card data-cy={`NewTeaching:${teaching.id}`}>
+        <Card key={teaching.id} data-cy={`NewTeaching:${teaching.id}`}>
           <CardContent>
             <Typography>{teaching.title}</Typography>
             <Typography variant='body2'>{teaching.subtitle}</Typography>
@@ -91,5 +91,27 @@ function RegularScreen({
         </Card>
       ))}
     </Box>
+  );
+}
+
+function ProgressCard({ progress }: { progress: UiProgressModel }) {
+  return (
+    <Link to={`/teaching/${progress.teaching.id}`}>
+      <Card>
+        <CardContent>
+          <Typography variant='subtitle1' data-cy={`HomeTeachingTitle:${progress.teaching.id}`}>
+            {progress.teaching.title}
+          </Typography>
+          <Typography variant='body2' data-cy={`HomeTeachingSubtitle:${progress.teaching.id}`}>
+            {progress.teaching.subtitle}
+          </Typography>
+          <LinearProgress
+            data-cy={`HomeScreenProgress:${progress.teaching.id}`}
+            variant='determinate'
+            value={progress.completionPercentage * 100}
+          />
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
