@@ -11,11 +11,21 @@ export default function AppError() {
 
   if (error) {
     return (
-      <Stack direction='row' sx={{ backgroundColor: theme.palette.text.primary, color: theme.palette.error.main }}>
+      <Stack
+        direction='row'
+        alignItems='center'
+        padding={1}
+        sx={{
+          backgroundColor: theme.palette.text.primary,
+          color: theme.palette.error.main,
+          position: 'absolute',
+          bottom: 0,
+        }}
+      >
         <Typography flex={1} variant='body2'>
           {error}
         </Typography>
-        <IconButton onClick={() => dispatch(setError(null))}>
+        <IconButton color='secondary' onClick={() => dispatch(setError(null))}>
           <Close />
         </IconButton>
       </Stack>

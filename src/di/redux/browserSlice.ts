@@ -19,7 +19,7 @@ const browserSlice = createSlice({
     setProgresses(state, action: PayloadAction<UiProgressModel[] | null>) {
       state.progresses = action.payload;
     },
-    setNewTeachings(state, action: PayloadAction<NewTeachingRespDto[]>) {
+    setNewTeachings(state, action: PayloadAction<NewTeachingRespDto[] | null>) {
       state.newTeachings = action.payload;
     },
   },

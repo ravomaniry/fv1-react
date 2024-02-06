@@ -117,6 +117,7 @@ describe('Home screen', () => {
       },
     });
     cy.getByDataCy('NewTeaching:2').click();
+    cy.getByDataCy('TeachingSummaryScreen').should('exist');
     cy.getByDataCy('TSTitle').should('have.text', 'T2');
   });
 });

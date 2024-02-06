@@ -13,11 +13,8 @@ import { setProgresses } from '../../di/redux/browserSlice';
 import { useLoadNewTeachings } from '../Explorer/hooks';
 import { NewTeachingRespDto } from '../../clients/fv1';
 import { UiProgressModel } from '../../models/progress';
-import { Link, useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
-import { Logger } from '../../lib/logger';
-
-const logger = new Logger('HomeScreen');
+import { Link } from 'react-router-dom';
+import NewTeachingCard from '../Explorer/NewTeachingCard';
 
 function useHome() {
   const texts = useAppTexts();
@@ -33,33 +30,6 @@ function useHome() {
     }
   });
   useLoadNewTeachings();
-}
-
-function useStartTeaching(teaching: NewTeachingRespDto) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { apiClient } = useAppContext();
-  const texts = useAppTexts();
-  const progresses = useAppSelector((s) => s.browser.progresses);
-
-  return useCallback(async () => {
-    // set to null to display loader
-    dispatch(setProgresses(null));
-    try {
-      const newProgress = await apiClient.progress.start({ teachingId: teaching.id });
-      dispatch(
-        setProgresses([
-          ...(progresses?.filter((p) => p.teaching.id !== teaching.id) ?? []),
-          new UiProgressModel(newProgress.data),
-        ]),
-      );
-      navigate(`teaching/${teaching.id}`);
-      logger.debug(`teaching/${teaching.id}`);
-    } catch (error) {
-      dispatch(setError(getErrorMessage(error, texts)));
-      dispatch(setProgresses(progresses));
-    }
-  }, [apiClient.progress, dispatch, navigate, progresses, teaching.id, texts]);
 }
 
 export default function Home() {
@@ -135,17 +105,5 @@ function ProgressCard({ progress }: { progress: UiProgressModel }) {
         </CardContent>
       </Card>
     </Link>
-  );
-}
-
-function NewTeachingCard({ teaching }: { teaching: NewTeachingRespDto }) {
-  const onClick = useStartTeaching(teaching);
-  return (
-    <Card onClick={onClick} data-cy={`NewTeaching:${teaching.id}`}>
-      <CardHeader title={teaching.title} />
-      <CardContent>
-        <Typography variant='body2'>{teaching.subtitle}</Typography>
-      </CardContent>
-    </Card>
   );
 }
