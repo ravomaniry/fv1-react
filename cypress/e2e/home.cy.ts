@@ -22,7 +22,9 @@ describe('Home screen', () => {
     cy.getByDataCy('HomeScreen').should('exist');
     cy.getByDataCy('EmptyScreen').should('not.exist');
     cy.getByDataCy('NewTeaching:1').should('contain.text', 'Teaching 1').should('contain.text', 'Subtitle 1');
-    cy.getByDataCy('ExplorerButton').should('exist');
+    cy.getByDataCy('ExplorerButton').should('exist').click();
+    cy.getByDataCy('ExplorerScreen').should('exist');
+    cy.getByDataCy('NewTeaching:1').should('contain.text', 'Teaching 1').should('contain.text', 'Subtitle 1');
   });
 
   it('Open teaching from progress', () => {

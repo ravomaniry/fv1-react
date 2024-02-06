@@ -7,7 +7,11 @@ export default function FormikFieldError({ name }: { name: string }) {
   const texts = useAppTexts();
   if (meta.touched && meta.error) {
     return (
-      <Typography component='div' variant='caption' color='secondary'>
+      <Typography
+        component='div'
+        variant='caption'
+        color='secondary'
+      >
         {texts.requiredFieldMessage}
       </Typography>
     );

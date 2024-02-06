@@ -6,5 +6,11 @@ export const LinkBehavior = forwardRef<
   Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
 >((props, ref) => {
   const { href, ...other } = props;
-  return <RouterLink ref={ref} to={href} {...other} />;
+  return (
+    <RouterLink
+      ref={ref}
+      to={href}
+      {...other}
+    />
+  );
 });

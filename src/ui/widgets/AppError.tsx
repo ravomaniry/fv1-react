@@ -22,10 +22,16 @@ export default function AppError() {
           bottom: 0,
         }}
       >
-        <Typography flex={1} variant='body2'>
+        <Typography
+          flex={1}
+          variant='body2'
+        >
           {error}
         </Typography>
-        <IconButton color='secondary' onClick={() => dispatch(setError(null))}>
+        <IconButton
+          color='secondary'
+          onClick={() => dispatch(setError(null))}
+        >
           <Close />
         </IconButton>
       </Stack>

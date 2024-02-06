@@ -41,7 +41,10 @@ function useStartTeaching(teaching: NewTeachingRespDto) {
 export default function NewTeachingCard({ teaching }: { teaching: NewTeachingRespDto }) {
   const onClick = useStartTeaching(teaching);
   return (
-    <Card onClick={onClick} data-cy={`NewTeaching:${teaching.id}`}>
+    <Card
+      onClick={onClick}
+      data-cy={`NewTeaching:${teaching.id}`}
+    >
       <CardHeader title={teaching.title} />
       <CardContent>
         <Typography variant='body2'>{teaching.subtitle}</Typography>

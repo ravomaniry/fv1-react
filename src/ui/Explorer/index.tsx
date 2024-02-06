@@ -9,14 +9,19 @@ export default function ExplorerScreen() {
   const list = useAppSelector((s) => s.browser.newTeachings);
   useLoadNewTeachings();
   return (
-    <AppContainer>
+    <AppContainer dataCy='ExplorerScreen'>
       <WrapInLoader
         isReady={!!list}
         builder={() => {
           if (list?.length === 0) {
             return <NoDataMessage />;
           }
-          return list?.map((teaching) => <NewTeachingCard key={teaching.id} teaching={teaching} />);
+          return list?.map((teaching) => (
+            <NewTeachingCard
+              key={teaching.id}
+              teaching={teaching}
+            />
+          ));
         }}
       />
     </AppContainer>

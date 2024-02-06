@@ -38,20 +38,25 @@ export default function Home() {
   const newTeachings = useAppSelector((s) => s.browser.newTeachings);
   const isReady = Boolean(progresses);
   return (
-    <div data-cy='HomeScreen'>
-      <HomePageContainer fab={isReady ? <ExplorerButton /> : null}>
-        <WrapInLoader
-          isReady={progresses !== null}
-          builder={() =>
-            !progresses?.length && !newTeachings?.length ? (
-              <EmptyScreen />
-            ) : (
-              <RegularScreen progresses={progresses!} newTeachings={newTeachings} />
-            )
+    <HomePageContainer
+      dataCy='HomeScreen'
+      fab={isReady ? <ExplorerButton /> : null}
+    >
+      <WrapInLoader
+        isReady={progresses !== null}
+        builder={() => {
+          if (!progresses?.length && !newTeachings?.length) {
+            return <EmptyScreen />;
           }
-        />
-      </HomePageContainer>
-    </div>
+          return (
+            <RegularScreen
+              progresses={progresses!}
+              newTeachings={newTeachings}
+            />
+          );
+        }}
+      />
+    </HomePageContainer>
   );
 }
 
@@ -80,10 +85,18 @@ function RegularScreen({
     <Box>
       {progresses.length > 0 && <Typography variant='subtitle2'>{texts.teachingsInProgress}</Typography>}
       {progresses.map((progress) => (
-        <ProgressCard key={progress.id} progress={progress} />
+        <ProgressCard
+          key={progress.id}
+          progress={progress}
+        />
       ))}
       {Boolean(newTeachings?.length) && <Typography variant='subtitle2'>{texts.teachingsAvailable}</Typography>}
-      {newTeachings?.map((teaching) => <NewTeachingCard key={teaching.id} teaching={teaching} />)}
+      {newTeachings?.map((teaching) => (
+        <NewTeachingCard
+          key={teaching.id}
+          teaching={teaching}
+        />
+      ))}
     </Box>
   );
 }
@@ -92,9 +105,15 @@ function ProgressCard({ progress }: { progress: UiProgressModel }) {
   return (
     <Link to={`/teaching/${progress.teaching.id}`}>
       <Card>
-        <CardHeader data-cy={`HomeTeachingTitle:${progress.teaching.id}`} title={progress.teaching.title} />
+        <CardHeader
+          data-cy={`HomeTeachingTitle:${progress.teaching.id}`}
+          title={progress.teaching.title}
+        />
         <CardContent>
-          <Typography variant='body2' data-cy={`HomeTeachingSubtitle:${progress.teaching.id}`}>
+          <Typography
+            variant='body2'
+            data-cy={`HomeTeachingSubtitle:${progress.teaching.id}`}
+          >
             {progress.teaching.subtitle}
           </Typography>
           <LinearProgress

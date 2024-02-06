@@ -12,24 +12,49 @@ export default function LoginScreen() {
   const texts = useAppTexts();
   const { disabled, onSubmit, onRegisterGuest } = useLoginRegister();
   return (
-    <HomePageContainer fab={<HelpButton />}>
-      <Box textAlign='center' data-cy='loginScreen'>
-        <Typography variant='subtitle1' textAlign='center'>
+    <HomePageContainer
+      dataCy='loginScreen'
+      fab={<HelpButton />}
+    >
+      <Box textAlign='center'>
+        <Typography
+          variant='subtitle1'
+          textAlign='center'
+        >
           {texts.loginTitle}
         </Typography>
-        <LoginForm disabled={disabled} submitButtonLabel={texts.login} onSubmit={onSubmit} />
-        <Typography component='div' variant='caption'>
+        <LoginForm
+          disabled={disabled}
+          submitButtonLabel={texts.login}
+          onSubmit={onSubmit}
+        />
+        <Typography
+          component='div'
+          variant='caption'
+        >
           {texts.noAccountYet}
         </Typography>
         <Link to={routes.register}>
-          <Button disabled={disabled} variant='outlined' data-cy='RegisterButton'>
+          <Button
+            disabled={disabled}
+            variant='outlined'
+            data-cy='RegisterButton'
+          >
             {texts.createAccount}
           </Button>
         </Link>
-        <Typography component='div' variant='caption'>
+        <Typography
+          component='div'
+          variant='caption'
+        >
           {texts.or}
         </Typography>
-        <Button disabled={disabled} variant='outlined' data-cy='RegisterGuestButton' onClick={onRegisterGuest}>
+        <Button
+          disabled={disabled}
+          variant='outlined'
+          data-cy='RegisterGuestButton'
+          onClick={onRegisterGuest}
+        >
           {texts.continueAsGuest}
         </Button>
         <LoginError />

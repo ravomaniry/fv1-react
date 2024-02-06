@@ -5,6 +5,7 @@ import { useAppTexts } from '../../di/redux';
 
 interface Props {
   fab: ReactNode;
+  dataCy: string;
 }
 
 function Header() {
@@ -20,7 +21,12 @@ function Header() {
       flexGrow={1}
     >
       <ResponsivePadding>
-        <Typography variant='h3' color='white' fontFamily='Jetbrains Mono, monospace' fontWeight='bold'>
+        <Typography
+          variant='h3'
+          color='white'
+          fontFamily='Jetbrains Mono, monospace'
+          fontWeight='bold'
+        >
           {text.title1}
         </Typography>
         <Box>
@@ -38,7 +44,13 @@ function Header() {
             {text.title2}
           </Typography>
         </Box>
-        <Typography zIndex={2} color='white' variant='body2' marginTop={1} position='relative'>
+        <Typography
+          zIndex={2}
+          color='white'
+          variant='body2'
+          marginTop={1}
+          position='relative'
+        >
           {text.appSlogan}
         </Typography>
       </ResponsivePadding>
@@ -74,15 +86,27 @@ function Header() {
   );
 }
 
-export default function HomePageContainer({ children, fab }: PropsWithChildren<Props>) {
+export default function HomePageContainer({ children, fab, dataCy }: PropsWithChildren<Props>) {
   return (
-    <Box display='flex' flexDirection='column' minHeight='100vh'>
+    <Box
+      display='flex'
+      flexDirection='column'
+      minHeight='100vh'
+      data-cy={dataCy}
+    >
       <Header />
-      <Box flex={0} marginTop={2}>
+      <Box
+        flex={0}
+        marginTop={2}
+      >
         <ResponsivePadding>
           <Card>
             <CardContent>
-              <Stack direction='column' justifyContent='center' spacing={2}>
+              <Stack
+                direction='column'
+                justifyContent='center'
+                spacing={2}
+              >
                 {children}
               </Stack>
             </CardContent>

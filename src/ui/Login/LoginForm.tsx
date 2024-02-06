@@ -31,7 +31,11 @@ const validationSchema = yup
 export default function LoginForm({ disabled, submitButtonLabel, onSubmit }: Props) {
   const texts = useAppTexts();
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       {({ handleChange, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <Box>
@@ -45,7 +49,10 @@ export default function LoginForm({ disabled, submitButtonLabel, onSubmit }: Pro
             />
             <FormikFieldError name='username' />
           </Box>
-          <Box marginTop={2} marginBottom={2}>
+          <Box
+            marginTop={2}
+            marginBottom={2}
+          >
             <TextField
               fullWidth
               inputProps={{ 'data-cy': 'password' }}
@@ -56,7 +63,12 @@ export default function LoginForm({ disabled, submitButtonLabel, onSubmit }: Pro
             />
             <FormikFieldError name='password' />
           </Box>
-          <Button disabled={disabled} variant='contained' type='submit' data-cy='LoginButton'>
+          <Button
+            disabled={disabled}
+            variant='contained'
+            type='submit'
+            data-cy='LoginButton'
+          >
             {submitButtonLabel}
           </Button>
         </form>
