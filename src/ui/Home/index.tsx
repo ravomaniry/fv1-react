@@ -4,7 +4,7 @@ import { routes } from '../routes';
 import AppFab from '../widgets/Fab';
 import HomePageContainer from '../widgets/HomePageContainer';
 import WrapInLoader from '../widgets/WrapInLoader';
-import { Box, Card, CardContent, LinearProgress, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, LinearProgress, Typography } from '@mui/material';
 import { useCallOnMount } from '../hooks/useCallOnMount';
 import { useAppContext } from '../../di/appContext/useAppContext';
 import { setError } from '../../di/redux/appSlice';
@@ -13,7 +13,11 @@ import { setProgresses } from '../../di/redux/browserSlice';
 import { useLoadNewTeachings } from '../Explorer/hooks';
 import { NewTeachingRespDto } from '../../clients/fv1';
 import { UiProgressModel } from '../../models/progress';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { Logger } from '../../lib/logger';
+
+const logger = new Logger('HomeScreen');
 
 function useHome() {
   const texts = useAppTexts();
@@ -29,6 +33,33 @@ function useHome() {
     }
   });
   useLoadNewTeachings();
+}
+
+function useStartTeaching(teaching: NewTeachingRespDto) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { apiClient } = useAppContext();
+  const texts = useAppTexts();
+  const progresses = useAppSelector((s) => s.browser.progresses);
+
+  return useCallback(async () => {
+    // set to null to display loader
+    dispatch(setProgresses(null));
+    try {
+      const newProgress = await apiClient.progress.start({ teachingId: teaching.id });
+      dispatch(
+        setProgresses([
+          ...(progresses?.filter((p) => p.teaching.id !== teaching.id) ?? []),
+          new UiProgressModel(newProgress.data),
+        ]),
+      );
+      navigate(`teaching/${teaching.id}`);
+      logger.debug(`teaching/${teaching.id}`);
+    } catch (error) {
+      dispatch(setError(getErrorMessage(error, texts)));
+      dispatch(setProgresses(progresses));
+    }
+  }, [apiClient.progress, dispatch, navigate, progresses, teaching.id, texts]);
 }
 
 export default function Home() {
@@ -82,14 +113,7 @@ function RegularScreen({
         <ProgressCard key={progress.id} progress={progress} />
       ))}
       {Boolean(newTeachings?.length) && <Typography variant='subtitle2'>{texts.teachingsAvailable}</Typography>}
-      {newTeachings?.map((teaching) => (
-        <Card key={teaching.id} data-cy={`NewTeaching:${teaching.id}`}>
-          <CardContent>
-            <Typography>{teaching.title}</Typography>
-            <Typography variant='body2'>{teaching.subtitle}</Typography>
-          </CardContent>
-        </Card>
-      ))}
+      {newTeachings?.map((teaching) => <NewTeachingCard key={teaching.id} teaching={teaching} />)}
     </Box>
   );
 }
@@ -98,10 +122,8 @@ function ProgressCard({ progress }: { progress: UiProgressModel }) {
   return (
     <Link to={`/teaching/${progress.teaching.id}`}>
       <Card>
+        <CardHeader data-cy={`HomeTeachingTitle:${progress.teaching.id}`} title={progress.teaching.title} />
         <CardContent>
-          <Typography variant='subtitle1' data-cy={`HomeTeachingTitle:${progress.teaching.id}`}>
-            {progress.teaching.title}
-          </Typography>
           <Typography variant='body2' data-cy={`HomeTeachingSubtitle:${progress.teaching.id}`}>
             {progress.teaching.subtitle}
           </Typography>
@@ -113,5 +135,17 @@ function ProgressCard({ progress }: { progress: UiProgressModel }) {
         </CardContent>
       </Card>
     </Link>
+  );
+}
+
+function NewTeachingCard({ teaching }: { teaching: NewTeachingRespDto }) {
+  const onClick = useStartTeaching(teaching);
+  return (
+    <Card onClick={onClick} data-cy={`NewTeaching:${teaching.id}`}>
+      <CardHeader title={teaching.title} />
+      <CardContent>
+        <Typography variant='body2'>{teaching.subtitle}</Typography>
+      </CardContent>
+    </Card>
   );
 }

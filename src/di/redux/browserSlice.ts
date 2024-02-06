@@ -16,7 +16,7 @@ const browserSlice = createSlice({
   name: 'browser',
   initialState,
   reducers: {
-    setProgresses(state, action: PayloadAction<UiProgressModel[]>) {
+    setProgresses(state, action: PayloadAction<UiProgressModel[] | null>) {
       state.progresses = action.payload;
     },
     setNewTeachings(state, action: PayloadAction<NewTeachingRespDto[]>) {
