@@ -32,5 +32,19 @@ export const theme = createTheme({
         sx: { marginBottom: 1 },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        h2: {
+          fontSize: 24,
+        },
+      },
+    },
+    MuiCardHeader: {
+      styleOverrides: {
+        title: {
+          fontSize: 16,
+        },
+      },
+    },
   },
 });

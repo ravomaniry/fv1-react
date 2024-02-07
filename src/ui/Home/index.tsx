@@ -1,39 +1,16 @@
 import { Search } from '@mui/icons-material';
-import { useAppDispatch, useAppSelector, useAppTexts } from '../../di/redux';
+import { useAppSelector, useAppTexts } from '../../di/redux';
 import { routes } from '../routes';
 import AppFab from '../widgets/Fab';
 import HomePageContainer from '../widgets/HomePageContainer';
 import WrapInLoader from '../widgets/WrapInLoader';
 import { Box, Card, CardContent, CardHeader, LinearProgress, Typography } from '@mui/material';
-import { useCallOnMount } from '../hooks/useCallOnMount';
-import { useAppContext } from '../../di/appContext/useAppContext';
-import { setError } from '../../di/redux/appSlice';
-import { getErrorMessage } from '../../services/api/mapError';
-import { setProgresses } from '../../di/redux/browserSlice';
-import { useLoadNewTeachings } from '../Explorer/hooks';
 import { NewTeachingRespDto } from '../../clients/fv1';
 import { UiProgressModel } from '../../models/progress';
 import { Link } from 'react-router-dom';
 import NewTeachingCard from '../Explorer/NewTeachingCard';
 
-function useHome() {
-  const texts = useAppTexts();
-  const { apiClient } = useAppContext();
-  const dispatch = useAppDispatch();
-
-  useCallOnMount(async () => {
-    try {
-      const progresses = await apiClient.progress.getProgresses();
-      dispatch(setProgresses(progresses.data.map((p) => new UiProgressModel(p))));
-    } catch (error) {
-      dispatch(setError(getErrorMessage(error, texts)));
-    }
-  });
-  useLoadNewTeachings();
-}
-
-export default function Home() {
-  useHome();
+export default function HomeScreenIndex() {
   const progresses = useAppSelector((s) => s.browser.progresses);
   const newTeachings = useAppSelector((s) => s.browser.newTeachings);
   const isReady = Boolean(progresses);

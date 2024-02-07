@@ -1,9 +1,10 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import Home from './Home';
+import HomeScreenIndex from './Home';
 import { useAppSelector } from '../di/redux';
 import { Logger } from '../lib/logger';
 import { ReactNode, lazy } from 'react';
 import { routes } from './routes';
+import HomeRoutesContainer from './Home/RoutesContainer';
 const TeachingSummary = lazy(() => import('./TeachingSummary'));
 const Chapter = lazy(() => import('./Chapter'));
 const Quiz = lazy(() => import('./Quiz'));
@@ -40,10 +41,13 @@ export default function AppRouter() {
         path={routes.register}
         element={<Redirect component={<Register />} />}
       />
-      <Route path={routes.home}>
+      <Route
+        path={routes.home}
+        element={<Redirect component={<HomeRoutesContainer />} />}
+      >
         <Route
-          path=''
-          element={<Redirect component={<Home />} />}
+          index
+          element={<Redirect component={<HomeScreenIndex />} />}
         />
         <Route path='teaching/:teachingId'>
           <Route
