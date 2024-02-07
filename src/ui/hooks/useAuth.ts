@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 import { useAppDispatch, useAppTexts } from '../../di/redux';
-import { FormValues } from './LoginForm';
+import { FormValues } from '../Login/LoginForm';
 import { setError, setUser } from '../../di/redux/appSlice';
 import { useAppContext } from '../../di/appContext/useAppContext';
 import { getErrorMessage } from '../../services/api/mapError';
 import { UiUserModel } from '../../clients/fv1';
 
-export function useLoginRegister() {
+export function useAuth() {
   const texts = useAppTexts();
   const dispatch = useAppDispatch();
   const { authService } = useAppContext();
@@ -45,10 +45,16 @@ export function useLoginRegister() {
     [authService, processRequest],
   );
 
+  const onLogout = useCallback(() => {
+    authService.logOut();
+    dispatch(setUser(null));
+  }, [authService, dispatch]);
+
   return {
     disabled,
     onSubmit,
     onRegisterGuest,
     onRegister,
+    onLogout,
   };
 }

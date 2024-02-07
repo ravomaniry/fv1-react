@@ -13,8 +13,8 @@ describe('Auth screen', () => {
     cy.tick(100);
   });
 
-  it('Log in with username and password', () => {
-    cy.getByDataCy('loginScreen').should('exist');
+  it('Log in with username and password - and logout', () => {
+    cy.getByDataCy('LoginScreen').should('exist');
     // // Validate form
     cy.getByDataCy('LoginButton').click();
     cy.getByDataCy('username').type('user1');
@@ -46,6 +46,15 @@ describe('Auth screen', () => {
           new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
       });
+    // Log out: go to login screen and clear local storage
+    cy.getByDataCy('UserMenuButton').click();
+    cy.getByDataCy('LogoutButton').click();
+    cy.getByDataCy('LoginScreen')
+      .should('exist')
+      .then(() => {
+        expect(localStorage.getItem(userKey)).to.eq(null);
+        expect(localStorage.getItem(tokenKey)).to.eq(null);
+      });
   });
 
   it('Register with username/password', () => {
@@ -56,7 +65,7 @@ describe('Auth screen', () => {
         tokens: { accessToken: accessTk, refreshToken: 'rt' },
       },
     });
-    cy.getByDataCy('loginScreen').should('exist');
+    cy.getByDataCy('LoginScreen').should('exist');
     cy.getByDataCy('RegisterButton').click();
     cy.getByDataCy('RegisterScreen').should('exist');
     cy.getByDataCy('username').type('user2');

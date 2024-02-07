@@ -8,6 +8,7 @@ import { AppContextProvider } from './di/appContext/index.tsx';
 import { Provider } from 'react-redux';
 import store from './di/redux/index.ts';
 import './styles/index.css';
+import ResponsivePaddingProvider from './di/paddingContext/index.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Provider store={store}>
         <AppContextProvider>
           <BrowserRouter>
-            <App />
+            <ResponsivePaddingProvider>
+              <App />
+            </ResponsivePaddingProvider>
           </BrowserRouter>
         </AppContextProvider>
       </Provider>

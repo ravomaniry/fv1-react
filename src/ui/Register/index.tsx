@@ -1,12 +1,12 @@
 import { Box, Typography } from '@mui/material';
-import { useLoginRegister } from '../Login/useLoginRegister';
+import { useAuth } from '../hooks/useAuth';
 import HelpButton from '../widgets/HelpButton';
 import HomePageContainer from '../widgets/HomePageContainer';
 import { useAppTexts } from '../../di/redux';
 import LoginForm from '../Login/LoginForm';
 
 export default function RegisterScreen() {
-  const { disabled, onRegister } = useLoginRegister();
+  const { disabled, onRegister } = useAuth();
   const texts = useAppTexts();
   return (
     <HomePageContainer

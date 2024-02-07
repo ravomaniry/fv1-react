@@ -6,14 +6,14 @@ import { Box, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { routes } from '../routes';
 import LoginForm from './LoginForm';
-import { useLoginRegister } from './useLoginRegister';
+import { useAuth } from '../hooks/useAuth';
 
 export default function LoginScreen() {
   const texts = useAppTexts();
-  const { disabled, onSubmit, onRegisterGuest } = useLoginRegister();
+  const { disabled, onSubmit, onRegisterGuest } = useAuth();
   return (
     <HomePageContainer
-      dataCy='loginScreen'
+      dataCy='LoginScreen'
       fab={<HelpButton />}
     >
       <Box textAlign='center'>

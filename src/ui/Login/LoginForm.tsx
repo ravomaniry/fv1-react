@@ -57,6 +57,7 @@ export default function LoginForm({ disabled, submitButtonLabel, onSubmit }: Pro
               fullWidth
               inputProps={{ 'data-cy': 'password' }}
               name='password'
+              type='password'
               label={texts.password}
               onChange={handleChange}
               disabled={disabled}

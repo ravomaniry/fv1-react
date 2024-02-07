@@ -2,6 +2,7 @@ import { Box, Card, CardContent, Stack, Typography, useTheme } from '@mui/materi
 import { PropsWithChildren, ReactNode } from 'react';
 import ResponsivePadding from './ResponsivePadding';
 import { useAppTexts } from '../../di/redux';
+import UserMenu from './UserMenu';
 
 interface Props {
   fab: ReactNode;
@@ -18,44 +19,50 @@ function Header() {
       flexDirection='column'
       justifyContent='center'
       position='relative'
+      overflow='hidden'
       flexGrow={1}
     >
-      <ResponsivePadding>
-        <Typography
-          variant='h3'
-          color='white'
-          fontFamily='Jetbrains Mono, monospace'
-          fontWeight='bold'
-        >
-          {text.title1}
-        </Typography>
-        <Box>
-          <Typography
-            sx={{ borderRadius: 20, backgroundColor: theme.palette.secondary.main }}
-            padding={1}
-            paddingLeft={2}
-            paddingRight={2}
-            variant='h6'
-            color='white'
-            fontWeight='bold'
-            component='span'
-            fontFamily='Jetbrains Mono, monospace'
-          >
-            {text.title2}
-          </Typography>
+      <ResponsivePadding zIndex={2}>
+        <Box padding={1}>
+          <Stack direction='row'>
+            <Box flexGrow={1}>
+              <Typography
+                variant='h3'
+                color='white'
+                fontFamily='Jetbrains Mono, monospace'
+                fontWeight='bold'
+              >
+                {text.title1}
+              </Typography>
+              <Box>
+                <Typography
+                  sx={{ borderRadius: 20, backgroundColor: theme.palette.secondary.main }}
+                  padding={1}
+                  paddingLeft={2}
+                  paddingRight={2}
+                  variant='h6'
+                  color='white'
+                  fontWeight='bold'
+                  component='span'
+                  fontFamily='Jetbrains Mono, monospace'
+                >
+                  {text.title2}
+                </Typography>
+              </Box>
+              <Typography
+                color='white'
+                variant='body2'
+                marginTop={1}
+              >
+                {text.appSlogan}
+              </Typography>
+            </Box>
+            <UserMenu />
+          </Stack>
         </Box>
-        <Typography
-          zIndex={2}
-          color='white'
-          variant='body2'
-          marginTop={1}
-          position='relative'
-        >
-          {text.appSlogan}
-        </Typography>
       </ResponsivePadding>
       <Box
-        zIndex={1}
+        zIndex={0}
         sx={{
           position: 'absolute',
           top: '1vw',
@@ -69,7 +76,7 @@ function Header() {
         }}
       />
       <Box
-        zIndex={1}
+        zIndex={0}
         sx={{
           position: 'absolute',
           bottom: '1vw',
