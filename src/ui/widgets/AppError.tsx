@@ -3,37 +3,50 @@ import { useAppSelector } from '../../di/redux';
 import { useDispatch } from 'react-redux';
 import { setError } from '../../di/redux/appSlice';
 import { Close } from '@mui/icons-material';
+import { dismissAudioError } from '../../di/redux/audioPlayerSlice';
 
 export default function AppError() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const error = useAppSelector((s) => s.app.error);
+  const appError = useAppSelector((s) => s.app.error);
+  const audioError = useAppSelector((s) => s.audioPlayer.error);
+  const error = appError || audioError;
 
   if (error) {
     return (
       <Stack
+        position='fixed'
         direction='row'
-        alignItems='center'
-        padding={1}
-        sx={{
-          backgroundColor: theme.palette.text.primary,
-          color: theme.palette.error.main,
-          position: 'absolute',
-          bottom: 0,
-        }}
+        justifyContent='center'
+        width='100%'
+        bottom={0}
       >
-        <Typography
-          flex={1}
-          variant='body2'
+        <Stack
+          direction='row'
+          alignItems='center'
+          padding={1}
+          borderRadius={theme.spacing(1)}
+          sx={{
+            backgroundColor: theme.palette.text.primary,
+            color: theme.palette.error.main,
+          }}
         >
-          {error}
-        </Typography>
-        <IconButton
-          color='secondary'
-          onClick={() => dispatch(setError(null))}
-        >
-          <Close />
-        </IconButton>
+          <Typography
+            flex={1}
+            variant='body2'
+          >
+            {error}
+          </Typography>
+          <IconButton
+            color='secondary'
+            onClick={() => {
+              dispatch(setError(null));
+              dispatch(dismissAudioError());
+            }}
+          >
+            <Close />
+          </IconButton>
+        </Stack>
       </Stack>
     );
   }

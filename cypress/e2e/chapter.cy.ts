@@ -36,12 +36,12 @@ describe('ChapterScreen', () => {
                   {
                     subtitle: 'SC211 title',
                     verses: 'SC211 verses',
-                    comment: 'SC211 content',
+                    comment: 'SC211 comment',
                     audioId: '1',
                   },
                   {
                     subtitle: 'SC212 title',
-                    comment: 'SC212 content',
+                    comment: 'SC212 comment',
                     verses: 'SC212 verses',
                     audioId: '2',
                   },
@@ -75,6 +75,31 @@ describe('ChapterScreen', () => {
   it('From teaching summary - open a chapter and complete Quiz', async () => {
     cy.visit('/teaching/1');
     cy.getByDataCy('TSTitle').should('have.text', 'T1');
+    // Open chapter manually
     cy.getByDataCy('TSChapter:1').click();
+    cy.getByDataCy('ChapterTitle').should('have.text', 'TC12');
+    // All chapters are completed
+    // -> Continue goes to first chapter
+    cy.go('back');
+    cy.getByDataCy('ContinueButton').click();
+    cy.getByDataCy('ChapterTitle').should('have.text', 'TC11');
+    // Some chapters are not completed
+    // -> Resume to the next chapter
+    cy.visit('/');
+    cy.getByDataCy('HomeTeachingTitle:2').click();
+    cy.getByDataCy('ContinueButton').click();
+    cy.getByDataCy('ChapterTitle').should('have.text', 'TC22');
+    // Render content
+    cy.getByDataCy('SectionTitle:0').should('have.text', 'SC211 title');
+    cy.getByDataCy('SectionVerses:0').should('have.text', 'SC211 verses');
+    cy.getByDataCy('SectionComment:0').should('have.text', 'SC211 comment');
+    cy.getByDataCy('SectionTitle:1').should('have.text', 'SC212 title');
+    cy.getByDataCy('SectionVerses:1').should('have.text', 'SC212 verses');
+    cy.getByDataCy('SectionComment:1').should('have.text', 'SC212 comment');
+    // Audio player
+    cy.intercept('GET', '/api/audio/url/1', { body: { url: 'http://1.wav' }, statusCode: 200 });
+    cy.getByDataCy('SectionTitle:0').click();
+    cy.getByDataCy('AudioPlayer').should('exist').should('have.attr', 'autoplay');
+    cy.getByDataCy('AudioPlayer').should('have.attr', 'src', 'http://1.wav');
   });
 });

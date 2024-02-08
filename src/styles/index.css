@@ -1,3 +1,23 @@
 a {
   text-decoration: none;
 }
+
+/* Copy color from src/ui/theme.tsx */
+audio::-webkit-media-controls-panel {
+  /* primary color light */
+  background-color: rgb(102, 85, 255);
+}
+
+audio::-webkit-media-controls-current-time-display {
+  color: #fff;
+}
+
+audio::-webkit-media-controls-time-remaining-display {
+  color: #fff;
+}
+
+audio::-webkit-media-controls-play-button ,
+audio::-webkit-media-controls-mute-button {
+  background-color: #fff;
+  border-radius: 50%;
+}

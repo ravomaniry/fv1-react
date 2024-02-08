@@ -1,19 +1,39 @@
-import { Link } from 'react-router-dom';
-import { Divider, ListItemText, MenuItem, MenuList, Typography, useTheme } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Box, Button, Divider, ListItemText, MenuItem, MenuList, Stack, Typography, useTheme } from '@mui/material';
 import WrapInLoader from '../widgets/WrapInLoader';
 import { TeachingChapter } from '../../clients/fv1';
 import AppContainer from '../widgets/AppContainer';
 import { Check } from '@mui/icons-material';
 import { useActiveProgress } from './hooks';
+import { useCallback } from 'react';
+import { useAppTexts } from '../../di/redux';
+
+function useTS() {
+  const navigate = useNavigate();
+  const active = useActiveProgress();
+
+  const onContinue = useCallback(() => {
+    navigate(`chapter/${active!.getNextChapterIndex()}`);
+  }, [active, navigate]);
+
+  return {
+    active,
+    onContinue,
+  };
+}
 
 export default function TeachingSummaryScreen() {
-  const active = useActiveProgress();
+  const texts = useAppTexts();
+  const { active, onContinue } = useTS();
   return (
     <AppContainer dataCy='TeachingSummaryScreen'>
       <WrapInLoader
         isReady={!!active}
         builder={() => (
-          <div>
+          <Stack
+            direction='column'
+            height='100%'
+          >
             <Typography
               variant='h2'
               data-cy='TSTitle'
@@ -26,17 +46,28 @@ export default function TeachingSummaryScreen() {
             >
               {active?.teaching.subtitle}
             </Typography>
-            <MenuList>
-              {active?.teaching.chapters.map((chapter, i) => (
-                <ChapterCard
-                  i={i}
-                  key={i}
-                  chapter={chapter}
-                  isDone={active.isChapterDone(i)}
-                />
-              ))}
-            </MenuList>
-          </div>
+            <Box flexGrow={1}>
+              <MenuList>
+                {active?.teaching.chapters.map((chapter, i) => (
+                  <ChapterCard
+                    i={i}
+                    key={i}
+                    chapter={chapter}
+                    isDone={active.isChapterDone(i)}
+                  />
+                ))}
+              </MenuList>
+            </Box>
+            <Box textAlign='right'>
+              <Button
+                variant='contained'
+                data-cy='ContinueButton'
+                onClick={onContinue}
+              >
+                {texts.continueButton}
+              </Button>
+            </Box>
+          </Stack>
         )}
       />
     </AppContainer>

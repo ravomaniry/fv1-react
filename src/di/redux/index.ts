@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import appSlice from './appSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import browserSlice from './browserSlice';
+import audioPlayerSlice from './audioPlayerSlice';
 
 const store = configureStore({
   reducer: {
     app: appSlice,
     browser: browserSlice,
+    audioPlayer: audioPlayerSlice,
   },
 });
 
