@@ -42,6 +42,10 @@ export default function AppRouter() {
         element={<Redirect component={<Register />} />}
       />
       <Route
+        path={routes.help}
+        element={<Help />}
+      />
+      <Route
         path={routes.home}
         element={<Redirect component={<HomeRoutesContainer />} />}
       >
@@ -72,10 +76,6 @@ export default function AppRouter() {
         <Route
           path={routes.explorer}
           element={<Redirect component={<Explorer />} />}
-        />
-        <Route
-          path={routes.help}
-          element={<Help />}
         />
       </Route>
     </Routes>

@@ -7,7 +7,7 @@ import { setNewTeachings, setProgresses } from '../../di/redux/browserSlice';
 import { getErrorMessage } from '../../services/api/mapError';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
-import { UiProgressModel } from '../../models/progress';
+import { newUiProgressModel } from '../../models/progress';
 
 function useStartTeaching(teaching: NewTeachingRespDto) {
   const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ function useStartTeaching(teaching: NewTeachingRespDto) {
       dispatch(
         setProgresses([
           ...(progresses?.filter((p) => p.teaching.id !== teaching.id) ?? []),
-          new UiProgressModel(newProgress.data),
+          newUiProgressModel(newProgress.data),
         ]),
       );
       navigate(`/teaching/${teaching.id}`);

@@ -1,40 +1,40 @@
 import { ProgressEntity, ProgressScore, TeachingEntity } from '../clients/fv1';
 
-export class UiProgressModel implements ProgressEntity {
-  public readonly id: number;
-  public readonly teaching: TeachingEntity;
-  public readonly scores: ProgressScore[];
-  public readonly clientTimestamp: number;
-  public completionPercentage: number = 0;
+export interface UiProgressModel {
+  readonly id: number;
+  readonly teaching: TeachingEntity;
+  readonly scores: ProgressScore[];
+  readonly clientTimestamp: number;
+  readonly completionPercentage: number;
+}
 
-  public constructor(raw: ProgressEntity) {
-    this.id = raw.id;
-    this.teaching = raw.teaching;
-    this.scores = raw.scores;
-    this.clientTimestamp = raw.clientTimestamp;
-    this.calculateCompletionPercentage();
-  }
+export function newUiProgressModel(raw: ProgressEntity): UiProgressModel {
+  return {
+    ...raw,
+    completionPercentage: calculateCompletionPercentage(raw),
+  };
+}
 
-  private calculateCompletionPercentage() {
-    let completed = 0;
-    for (let i = 0; i < this.teaching.chapters.length; i++) {
-      if (this.isChapterDone(i)) {
-        completed++;
-      }
+export function isChapterDone({ scores }: ProgressEntity, index: number) {
+  return scores.length > index && scores[index].correctAnswersPercentage >= 0.75;
+}
+
+function calculateCompletionPercentage(progress: ProgressEntity) {
+  let completed = 0;
+  for (let i = 0; i < progress.teaching.chapters.length; i++) {
+    if (isChapterDone(progress, i)) {
+      completed++;
     }
-    this.completionPercentage = completed / this.teaching.chapters.length;
   }
+  return completed / progress.teaching.chapters.length;
+}
 
-  public isChapterDone(index: number) {
-    return this.scores.length > index && this.scores[index].correctAnswersPercentage >= 0.75;
-  }
-
-  public getNextChapterIndex() {
-    for (let i = 0; i < this.scores.length; i++) {
-      if (!this.isChapterDone(i)) {
-        return i;
-      }
+export function getNextChapterIndex(progress: UiProgressModel) {
+  const { scores, teaching } = progress;
+  for (let i = 0; i < scores.length; i++) {
+    if (!isChapterDone(progress, i)) {
+      return i;
     }
-    return this.scores.length < this.teaching.chapters.length ? this.scores.length : 0;
   }
+  return scores.length < teaching.chapters.length ? scores.length : 0;
 }

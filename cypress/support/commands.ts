@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { UiUserTokens } from '../../src/models/userTokens';
+import { newUiUserTokens } from '../../src/models/userTokens';
 import { tokenKey, userKey } from '../../src/services/storage';
 import { createAccessToken } from './createAccessToken';
 
@@ -23,7 +23,7 @@ Cypress.Commands.add('prePopulateLocalStorage', () => {
   localStorage.setItem(userKey, JSON.stringify({ id: 1, username: 'user1' }));
   localStorage.setItem(
     tokenKey,
-    JSON.stringify(new UiUserTokens({ accessToken: createAccessToken(), refreshToken: 'rt1' })),
+    JSON.stringify(newUiUserTokens({ accessToken: createAccessToken(), refreshToken: 'rt1' })),
   );
 });
 

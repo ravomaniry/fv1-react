@@ -7,13 +7,14 @@ import { Check } from '@mui/icons-material';
 import { useActiveProgress } from './hooks';
 import { useCallback } from 'react';
 import ContinueButton from '../widgets/ContinueButton';
+import { getNextChapterIndex, isChapterDone } from '../../models/progress';
 
 function useTS() {
   const navigate = useNavigate();
   const active = useActiveProgress();
 
   const onContinue = useCallback(() => {
-    navigate(`chapter/${active!.getNextChapterIndex()}`);
+    navigate(`chapter/${getNextChapterIndex(active!)}`);
   }, [active, navigate]);
 
   return {
@@ -52,7 +53,7 @@ export default function TeachingSummaryScreen() {
                     i={i}
                     key={i}
                     chapter={chapter}
-                    isDone={active.isChapterDone(i)}
+                    isDone={isChapterDone(active, i)}
                   />
                 ))}
               </MenuList>

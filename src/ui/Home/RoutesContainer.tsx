@@ -3,7 +3,7 @@ import { useAppDispatch, useAppTexts } from '../../di/redux';
 import { useAppContext } from '../../di/appContext/useAppContext';
 import { useCallOnMount } from '../hooks/useCallOnMount';
 import { setProgresses } from '../../di/redux/browserSlice';
-import { UiProgressModel } from '../../models/progress';
+import { newUiProgressModel } from '../../models/progress';
 import { setError } from '../../di/redux/appSlice';
 import { getErrorMessage } from '../../services/api/mapError';
 import { useLoadNewTeachings } from '../Explorer/hooks';
@@ -16,7 +16,7 @@ function useLoadData() {
   useCallOnMount(async () => {
     try {
       const progresses = await apiClient.progress.getProgresses();
-      dispatch(setProgresses(progresses.data.map((p) => new UiProgressModel(p))));
+      dispatch(setProgresses(progresses.data.map((p) => newUiProgressModel(p))));
     } catch (error) {
       dispatch(setError(getErrorMessage(error, texts)));
     }

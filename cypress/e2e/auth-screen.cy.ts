@@ -1,5 +1,5 @@
 import { mgTexts } from '../../src/models/texts';
-import { UiUserTokens } from '../../src/models/userTokens';
+import { newUiUserTokens } from '../../src/models/userTokens';
 import { tokenKey, userKey } from '../../src/services/storage';
 import { createAccessToken } from '../support/createAccessToken';
 
@@ -9,6 +9,7 @@ describe('Auth screen', () => {
   beforeEach(() => {
     cy.clock();
     cy.intercept('GET', '/api/progress', { statusCode: 200, body: [] }).as('login');
+    cy.intercept('GET', '/api/teaching/new', { statusCode: 200, body: [] }).as('login');
     cy.visit('/');
     cy.tick(100);
   });
@@ -43,7 +44,7 @@ describe('Auth screen', () => {
       .then(() => {
         expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 1, username: 'user1' });
         expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
-          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+          newUiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
       });
     // Log out: go to login screen and clear local storage
@@ -76,7 +77,7 @@ describe('Auth screen', () => {
       .then(() => {
         expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 2, username: 'user2' });
         expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
-          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+          newUiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
       });
   });
@@ -95,7 +96,7 @@ describe('Auth screen', () => {
       .then(() => {
         expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 3, username: 'user3' });
         expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
-          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+          newUiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
       });
   });
