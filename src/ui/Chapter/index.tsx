@@ -6,6 +6,8 @@ import Markdown from 'react-markdown';
 import { PlayCircle, Speaker } from '@mui/icons-material';
 import { useAudioPlayer } from '../widgets/AudioPlayer/useAudioPlayer';
 import AudioPlayer from '../widgets/AudioPlayer';
+import ContinueButton from '../widgets/ContinueButton';
+import { routes } from '../routes';
 
 export default function ChapterScreen() {
   const active = useActiveChapter();
@@ -15,25 +17,25 @@ export default function ChapterScreen() {
   return (
     <>
       <AppContainer dataCy='ChapterScreen'>
-        <Stack
-          direction='column'
-          height='100%'
-        >
+        <Stack direction='column'>
           <Typography
             variant='h2'
             data-cy='ChapterTitle'
           >
             {active.chapter.title}
           </Typography>
-          <Box flexGrow={1}>
-            {active.chapter.sections.map((section, i) => (
-              <SectionCard
-                i={i}
-                key={i}
-                section={section}
-              />
-            ))}
-          </Box>
+          {active.chapter.sections.map((section, i) => (
+            <SectionCard
+              i={i}
+              key={i}
+              section={section}
+            />
+          ))}
+          <ContinueButton href={routes.quiz} />
+          <Box
+            data-comment='to compensate the height of the audio player'
+            height={60}
+          />
         </Stack>
       </AppContainer>
       <AudioPlayer key='audioPlayer' />

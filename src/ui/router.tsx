@@ -51,13 +51,14 @@ export default function AppRouter() {
         />
         <Route path='teaching/:teachingId'>
           <Route
-            path=''
+            index
             element={<Redirect component={<TeachingSummary />} />}
           />
-          <Route
-            path='chapter/:chapterIndex'
-            element={<Redirect component={<Chapter />} />}
-          >
+          <Route path='chapter/:chapterIndex'>
+            <Route
+              index
+              element={<Redirect component={<Chapter />} />}
+            />
             <Route
               path={routes.quiz}
               element={<Redirect component={<Quiz />} />}

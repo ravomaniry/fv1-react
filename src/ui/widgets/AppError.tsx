@@ -19,6 +19,7 @@ export default function AppError() {
         direction='row'
         justifyContent='center'
         width='100%'
+        data-cy='AppError'
         bottom={0}
       >
         <Stack
@@ -39,6 +40,7 @@ export default function AppError() {
           </Typography>
           <IconButton
             color='secondary'
+            data-cy='DismissErrorButton'
             onClick={() => {
               dispatch(setError(null));
               dispatch(dismissAudioError());

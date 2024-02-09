@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, Divider, ListItemText, MenuItem, MenuList, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Divider, ListItemText, MenuItem, MenuList, Stack, Typography, useTheme } from '@mui/material';
 import WrapInLoader from '../widgets/WrapInLoader';
 import { TeachingChapter } from '../../clients/fv1';
 import AppContainer from '../widgets/AppContainer';
 import { Check } from '@mui/icons-material';
 import { useActiveProgress } from './hooks';
 import { useCallback } from 'react';
-import { useAppTexts } from '../../di/redux';
+import ContinueButton from '../widgets/ContinueButton';
 
 function useTS() {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ function useTS() {
 }
 
 export default function TeachingSummaryScreen() {
-  const texts = useAppTexts();
   const { active, onContinue } = useTS();
   return (
     <AppContainer dataCy='TeachingSummaryScreen'>
@@ -58,15 +57,7 @@ export default function TeachingSummaryScreen() {
                 ))}
               </MenuList>
             </Box>
-            <Box textAlign='right'>
-              <Button
-                variant='contained'
-                data-cy='ContinueButton'
-                onClick={onContinue}
-              >
-                {texts.continueButton}
-              </Button>
-            </Box>
+            <ContinueButton onClick={onContinue} />
           </Stack>
         )}
       />

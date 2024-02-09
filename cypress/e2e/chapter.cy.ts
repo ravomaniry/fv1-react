@@ -1,4 +1,5 @@
 import { ProgressEntity } from '../../src/clients/fv1';
+import { mgTexts } from '../../src/models/texts';
 
 describe('ChapterScreen', () => {
   beforeEach(() => {
@@ -97,9 +98,20 @@ describe('ChapterScreen', () => {
     cy.getByDataCy('SectionVerses:1').should('have.text', 'SC212 verses');
     cy.getByDataCy('SectionComment:1').should('have.text', 'SC212 comment');
     // Audio player
-    cy.intercept('GET', '/api/audio/url/1', { body: { url: 'http://1.wav' }, statusCode: 200 });
+    cy.intercept('GET', '/api/audio/url/1', { body: { url: '/1-second-of-silence.mp3' }, statusCode: 200 });
     cy.getByDataCy('SectionTitle:0').click();
     cy.getByDataCy('AudioPlayer').should('exist').should('have.attr', 'autoplay');
-    cy.getByDataCy('AudioPlayer').should('have.attr', 'src', 'http://1.wav');
+    cy.getByDataCy('AudioPlayer').should('have.attr', 'src', '/1-second-of-silence.mp3');
+    cy.getByDataCy('AppError').should('not.exist');
+    // Audio player error
+    cy.intercept('GET', '/api/audio/url/2', { body: { url: '/not-found.mp3' }, statusCode: 200 });
+    cy.getByDataCy('SectionTitle:1').click();
+    cy.getByDataCy('AudioPlayer').should('have.attr', 'src', '/not-found.mp3');
+    cy.getByDataCy('AppError').should('have.text', mgTexts.errorAudioPlayer);
+    cy.getByDataCy('DismissErrorButton').click();
+    cy.getByDataCy('AppError').should('not.exist');
+    // Quiz
+    cy.getByDataCy('ContinueButton').click();
+    // Render questions
   });
 });

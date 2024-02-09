@@ -3,7 +3,7 @@ import { useAudioPlayer } from './useAudioPlayer';
 import { Close } from '@mui/icons-material';
 
 export default function AudioPlayer() {
-  const { activeAudioId, activeAudioUrl, close } = useAudioPlayer();
+  const { activeAudioId, activeAudioUrl, close, onError } = useAudioPlayer();
   if (!activeAudioId) {
     return null;
   }
@@ -32,12 +32,16 @@ export default function AudioPlayer() {
             <audio
               controls
               autoPlay
+              onError={onError}
               style={{ width: '100%', height: 48 }}
               src={activeAudioUrl}
               data-cy='AudioPlayer'
             />
             <div>
-              <IconButton onClick={close}>
+              <IconButton
+                onClick={close}
+                size='small'
+              >
                 <Close color='secondary' />
               </IconButton>
             </div>

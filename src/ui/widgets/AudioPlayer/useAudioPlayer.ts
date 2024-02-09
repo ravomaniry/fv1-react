@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector, useAppTexts } from '../../../di/redux';
 import { useAppContext } from '../../../di/appContext/useAppContext';
 import { closeAudioPlayer, setAudioError, setAudioId, setAudioUrl } from '../../../di/redux/audioPlayerSlice';
 import { getErrorMessage } from '../../../services/api/mapError';
+import { setError } from '../../../di/redux/appSlice';
 
 export function useAudioPlayer() {
   const texts = useAppTexts();
@@ -27,11 +28,14 @@ export function useAudioPlayer() {
 
   const close = useCallback(() => dispatch(closeAudioPlayer()), [dispatch]);
 
+  const onError = useCallback(() => dispatch(setError(texts.errorAudioPlayer)), [dispatch, texts.errorAudioPlayer]);
+
   return {
     activeAudioId: useAppSelector((s) => s.audioPlayer.audioId),
     activeAudioUrl: useAppSelector((s) => s.audioPlayer.audioUrl),
     play,
     stop,
     close,
+    onError,
   };
 }
