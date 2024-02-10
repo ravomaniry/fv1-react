@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import AppRouter from './ui/router';
 import SplashScreen from './ui/Splash';
 import { useAppSelector } from './di/redux';
+import AppError from './ui/widgets/AppError';
 
 function App() {
   const isInitialized = useAppSelector((s) => s.app.isInitialized);
@@ -12,6 +13,7 @@ function App() {
   return (
     <Suspense fallback={<SplashScreen />}>
       <AppRouter />
+      <AppError />
     </Suspense>
   );
 }

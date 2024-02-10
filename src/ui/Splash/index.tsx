@@ -1,11 +1,17 @@
-import { Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 
 export default function SplashScreen() {
   return (
-    <Grid container sx={{ height: '100vh' }} justifyContent='center' alignItems='center'>
-      <Grid item>
-        <img src='/icon.png' alt='...' />
-      </Grid>
-    </Grid>
+    <Stack
+      sx={{ height: '100vh' }}
+      justifyContent='center'
+      alignItems='center'
+    >
+      <img
+        width='50vw'
+        src='/icon.png'
+        alt='...'
+      />
+    </Stack>
   );
 }

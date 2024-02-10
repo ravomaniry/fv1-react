@@ -1,28 +1,29 @@
 import { UserTokens } from '../clients/fv1';
 import { jwtDecode } from 'jwt-decode';
 
-export class UiUserTokens implements UserTokens {
-  public accessToken: string;
-  public refreshToken: string;
-  private expirationTimestamp: number;
+// we cannot use class with methods because of redux serializable check
+export interface UiUserTokens {
+  readonly accessToken: string;
+  readonly refreshToken: string;
+  readonly expirationTimestamp: number;
+}
 
-  public constructor(raw: UserTokens) {
-    this.accessToken = raw.accessToken;
-    this.refreshToken = raw.refreshToken;
-    this.expirationTimestamp = this.readExpirationDate(raw.accessToken);
-  }
+export function newUiUserTokens(raw: UserTokens): UiUserTokens {
+  return {
+    ...raw,
+    expirationTimestamp: readExpirationDate(raw.accessToken),
+  };
+}
 
-  public updateAccessToken(token: string): void {
-    this.accessToken = token;
-    this.expirationTimestamp = this.readExpirationDate(token);
-  }
+function readExpirationDate(accessToken: string): number {
+  const decoded = jwtDecode(accessToken);
+  return decoded.exp! * 1000; // 1 hour from now
+}
 
-  public isAccessTokenExpired(): boolean {
-    return new Date().getTime() > this.expirationTimestamp;
-  }
+export function updateAccessToken(userToken: UiUserTokens, accessToken: string): UiUserTokens {
+  return newUiUserTokens({ ...userToken, accessToken });
+}
 
-  private readExpirationDate(accessToken: string): number {
-    const decoded = jwtDecode(accessToken);
-    return decoded.exp! * 1000; // 1 hour from now
-  }
+export function isAccessTokenExpired(token: UiUserTokens): boolean {
+  return new Date().getTime() > token.expirationTimestamp;
 }

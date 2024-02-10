@@ -1,19 +1,36 @@
 import React from 'react';
-import { useDocumentWidth } from '../hooks/documentWidth';
+import { useResponsivePadding } from '../../di/paddingContext/useResponsivePadding';
+import { Box, Theme } from '@mui/material';
 
 interface ResponsivePaddingProps {
   children: React.ReactNode;
+  zIndex?: number;
+  flexGrow?: number;
+  backgroundColor?: string;
+  height?: number | string | ((theme: Theme) => number | string);
 }
-const bigScreenWidth = 800;
 
-const ResponsivePadding: React.FC<ResponsivePaddingProps> = ({ children }) => {
-  const docWidth = useDocumentWidth();
-  const totalPadding = docWidth - bigScreenWidth;
-  const padding = Math.max(0, totalPadding / 2);
+const ResponsivePadding: React.FC<ResponsivePaddingProps> = ({
+  children,
+  zIndex,
+  flexGrow,
+  backgroundColor,
+  height,
+}) => {
+  const padding = useResponsivePadding();
   return (
-    <div style={{ paddingLeft: padding, paddingRight: padding }}>
-      <div style={{ position: 'relative' }}>{children}</div>{' '}
-    </div>
+    <Box
+      zIndex={zIndex}
+      flexGrow={flexGrow}
+      style={{ marginLeft: padding, marginRight: padding, backgroundColor }}
+    >
+      <Box
+        padding={1}
+        height={height}
+      >
+        {children}
+      </Box>
+    </Box>
   );
 };
 

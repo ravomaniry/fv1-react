@@ -29,8 +29,11 @@ const appSlice = createSlice({
     setIsInitialized(state) {
       state.isInitialized = true;
     },
+    logOut(state) {
+      state.user = null;
+    },
   },
 });
 
-export const { setUser, setError, setIsInitialized } = appSlice.actions;
+export const { setUser, setError, setIsInitialized, logOut } = appSlice.actions;
 export default appSlice.reducer;

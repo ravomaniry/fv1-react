@@ -1,5 +1,5 @@
 import { mgTexts } from '../../src/models/texts';
-import { UiUserTokens } from '../../src/models/userTokens';
+import { newUiUserTokens } from '../../src/models/userTokens';
 import { tokenKey, userKey } from '../../src/services/storage';
 import { createAccessToken } from '../support/createAccessToken';
 
@@ -9,12 +9,13 @@ describe('Auth screen', () => {
   beforeEach(() => {
     cy.clock();
     cy.intercept('GET', '/api/progress', { statusCode: 200, body: [] }).as('login');
+    cy.intercept('GET', '/api/teaching/new', { statusCode: 200, body: [] }).as('login');
     cy.visit('/');
     cy.tick(100);
   });
 
-  it('Log in with username and password', () => {
-    cy.getByDataCy('loginScreen').should('exist');
+  it('Log in with username and password - and logout', () => {
+    cy.getByDataCy('LoginScreen').should('exist');
     // // Validate form
     cy.getByDataCy('LoginButton').click();
     cy.getByDataCy('username').type('user1');
@@ -43,8 +44,17 @@ describe('Auth screen', () => {
       .then(() => {
         expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 1, username: 'user1' });
         expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
-          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+          newUiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
+      });
+    // Log out: go to login screen and clear local storage
+    cy.getByDataCy('UserMenuButton').click();
+    cy.getByDataCy('LogoutButton').click();
+    cy.getByDataCy('LoginScreen')
+      .should('exist')
+      .then(() => {
+        expect(localStorage.getItem(userKey)).to.eq(null);
+        expect(localStorage.getItem(tokenKey)).to.eq(null);
       });
   });
 
@@ -56,7 +66,7 @@ describe('Auth screen', () => {
         tokens: { accessToken: accessTk, refreshToken: 'rt' },
       },
     });
-    cy.getByDataCy('loginScreen').should('exist');
+    cy.getByDataCy('LoginScreen').should('exist');
     cy.getByDataCy('RegisterButton').click();
     cy.getByDataCy('RegisterScreen').should('exist');
     cy.getByDataCy('username').type('user2');
@@ -67,7 +77,7 @@ describe('Auth screen', () => {
       .then(() => {
         expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 2, username: 'user2' });
         expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
-          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+          newUiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
       });
   });
@@ -86,7 +96,7 @@ describe('Auth screen', () => {
       .then(() => {
         expect(JSON.parse(localStorage.getItem(userKey)!)).to.deep.equal({ id: 3, username: 'user3' });
         expect(JSON.parse(localStorage.getItem(tokenKey)!)).to.deep.equal(
-          new UiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
+          newUiUserTokens({ accessToken: accessTk, refreshToken: 'rt' }),
         );
       });
   });

@@ -12,6 +12,7 @@ export function useLoadNewTeachings() {
 
   useCallOnMount(async () => {
     try {
+      dispatch(setNewTeachings(undefined)); // refresh screen
       const teachings = await apiClient.teaching.getNew();
       dispatch(setNewTeachings(teachings.data));
     } catch (error) {

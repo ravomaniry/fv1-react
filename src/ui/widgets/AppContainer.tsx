@@ -1,15 +1,23 @@
 import { PropsWithChildren } from 'react';
 import ResponsivePadding from './ResponsivePadding';
-import AppError from './AppError';
-import { Paper } from '@mui/material';
+import { Stack } from '@mui/material';
+import AppBar from './AppBar';
 
-export default function AppContainer({ children }: PropsWithChildren) {
+export default function AppContainer({ children, dataCy }: PropsWithChildren<{ dataCy: string }>) {
   return (
-    <ResponsivePadding>
-      <Paper sx={{ height: '100vh', padding: 1 }}>
+    <Stack
+      data-cy={dataCy}
+      height='100vh'
+      direction='column'
+    >
+      <AppBar />
+      <ResponsivePadding
+        height='100%'
+        flexGrow={1}
+        backgroundColor='white'
+      >
         {children}
-        <AppError />
-      </Paper>
-    </ResponsivePadding>
+      </ResponsivePadding>
+    </Stack>
   );
 }

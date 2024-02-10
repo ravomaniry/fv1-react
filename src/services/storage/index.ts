@@ -1,5 +1,5 @@
 import { UiUserModel, UserTokens } from '../../clients/fv1';
-import { UiUserTokens } from '../../models/userTokens';
+import { UiUserTokens, newUiUserTokens } from '../../models/userTokens';
 
 export const tokenKey = 'e078cb80';
 export const userKey = 'd53965678';
@@ -9,7 +9,7 @@ export class StorageService {
     if (!this.storageStateIsValid()) {
       return null;
     }
-    return this.get(tokenKey, (d) => new UiUserTokens(JSON.parse(d)));
+    return this.get(tokenKey, (d) => newUiUserTokens(JSON.parse(d)));
   }
 
   public saveTokens(tokens: UserTokens): void {

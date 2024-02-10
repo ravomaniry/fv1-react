@@ -32,5 +32,41 @@ export const theme = createTheme({
         sx: { marginBottom: 1 },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        h2: {
+          marginBottom: 8,
+          fontSize: 24,
+          textAlign: 'center',
+          color: primary,
+        },
+        h3: {
+          fontSize: 20,
+          paddingBottom: 8,
+        },
+      },
+    },
+    MuiCardHeader: {
+      styleOverrides: {
+        title: {
+          fontSize: 16,
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          paddingTop: 0,
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: 'black',
+          fontWeight: 400,
+        },
+      },
+    },
   },
 });
