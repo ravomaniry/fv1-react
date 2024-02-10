@@ -22,7 +22,7 @@ const ResponsivePadding: React.FC<ResponsivePaddingProps> = ({
     <Box
       zIndex={zIndex}
       flexGrow={flexGrow}
-      style={{ paddingLeft: padding, paddingRight: padding, backgroundColor }}
+      style={{ marginLeft: padding, marginRight: padding, backgroundColor }}
     >
       <Box
         padding={1}

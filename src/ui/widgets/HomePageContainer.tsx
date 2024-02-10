@@ -7,9 +7,10 @@ import UserMenu from './UserMenu';
 interface Props {
   fab: ReactNode;
   dataCy: string;
+  userMenu?: boolean;
 }
 
-function Header() {
+function Header({ userMenu }: { userMenu: boolean | undefined }) {
   const text = useAppTexts();
   const theme = useTheme();
   return (
@@ -27,10 +28,10 @@ function Header() {
           <Stack direction='row'>
             <Box flexGrow={1}>
               <Typography
-                variant='h3'
                 color='white'
                 fontFamily='Jetbrains Mono, monospace'
                 fontWeight='bold'
+                fontSize={36}
               >
                 {text.title1}
               </Typography>
@@ -40,8 +41,8 @@ function Header() {
                   padding={1}
                   paddingLeft={2}
                   paddingRight={2}
-                  variant='h6'
                   color='white'
+                  fontSize={18}
                   fontWeight='bold'
                   component='span'
                   fontFamily='Jetbrains Mono, monospace'
@@ -51,13 +52,12 @@ function Header() {
               </Box>
               <Typography
                 color='white'
-                variant='body2'
                 marginTop={1}
               >
                 {text.appSlogan}
               </Typography>
             </Box>
-            <UserMenu />
+            {userMenu && <UserMenu />}
           </Stack>
         </Box>
       </ResponsivePadding>
@@ -72,7 +72,8 @@ function Header() {
           maxWidth: '250px',
           maxHeight: '250px',
           borderRadius: '50%',
-          background: theme.palette.primary.light,
+          background: theme.palette.primary.dark,
+          opacity: 0.2,
         }}
       />
       <Box
@@ -93,7 +94,7 @@ function Header() {
   );
 }
 
-export default function HomePageContainer({ children, fab, dataCy }: PropsWithChildren<Props>) {
+export default function HomePageContainer({ children, fab, userMenu, dataCy }: PropsWithChildren<Props>) {
   return (
     <Box
       display='flex'
@@ -101,7 +102,7 @@ export default function HomePageContainer({ children, fab, dataCy }: PropsWithCh
       minHeight='100vh'
       data-cy={dataCy}
     >
-      <Header />
+      <Header userMenu={userMenu} />
       <Box
         flex={0}
         marginTop={2}

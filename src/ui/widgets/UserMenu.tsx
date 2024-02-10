@@ -4,6 +4,7 @@ import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, useThe
 import { AccountCircle, AccountCircleOutlined, HelpOutline, Logout } from '@mui/icons-material';
 import { routes } from '../routes';
 import { useAuth } from '../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export default function UserMenu() {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -30,12 +31,14 @@ export default function UserMenu() {
           </ListItemIcon>
           <ListItemText>{user?.username}</ListItemText>
         </MenuItem>
-        <MenuItem href={routes.help}>
-          <ListItemIcon>
-            <HelpOutline color='primary' />
-          </ListItemIcon>
-          <ListItemText>{texts.helpTitle}</ListItemText>
-        </MenuItem>
+        <Link to={routes.help}>
+          <MenuItem>
+            <ListItemIcon>
+              <HelpOutline color='primary' />
+            </ListItemIcon>
+            <ListItemText>{texts.helpTitle}</ListItemText>
+          </MenuItem>
+        </Link>
         <Divider />
         <MenuItem
           data-cy='LogoutButton'

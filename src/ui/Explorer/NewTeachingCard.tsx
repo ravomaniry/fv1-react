@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardHeader, Typography } from '@mui/material';
 import { NewTeachingRespDto } from '../../clients/fv1';
 import { useAppContext } from '../../di/appContext/useAppContext';
 import { useAppDispatch, useAppSelector, useAppTexts } from '../../di/redux';
@@ -45,10 +45,12 @@ export default function NewTeachingCard({ teaching }: { teaching: NewTeachingRes
       onClick={onClick}
       data-cy={`NewTeaching:${teaching.id}`}
     >
-      <CardHeader title={teaching.title} />
-      <CardContent>
-        <Typography variant='body2'>{teaching.subtitle}</Typography>
-      </CardContent>
+      <CardActionArea>
+        <CardHeader title={teaching.title} />
+        <CardContent>
+          <Typography variant='body2'>{teaching.subtitle}</Typography>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 }

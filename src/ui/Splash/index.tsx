@@ -8,6 +8,7 @@ export default function SplashScreen() {
       alignItems='center'
     >
       <img
+        width='50vw'
         src='/icon.png'
         alt='...'
       />

@@ -40,10 +40,7 @@ export default function ScoreScreen() {
         const total = active!.chapter.questions.length;
         return (
           <AppContainer dataCy='ScoreScreen'>
-            <Stack
-              direction='column'
-              height='100%'
-            >
+            <Stack direction='column'>
               <ChapterTitle active={active} />
               <Box flexGrow={1}>
                 <Stack
@@ -87,7 +84,7 @@ function WrongAnswerCard({ answer }: { answer: WrongAnswer }) {
       data-cy={`WrongAnswer:${answer.index}`}
     >
       <Divider />
-      <Typography variant='subtitle2'>
+      <Typography variant='subtitle1'>
         {answer.index + 1}. {answer.question}
       </Typography>
       <Typography

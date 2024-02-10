@@ -1,7 +1,6 @@
 export interface AppTexts {
   title1: string;
   title2: string;
-  shortTitle1: string;
   shortTitle2: string;
   appSlogan: string;
   continueButton: string;
@@ -47,7 +46,6 @@ export interface AppTexts {
 export const mgTexts: AppTexts = {
   title1: 'fitiavana',
   title2: 'voalohany',
-  shortTitle1: 'fitia',
   shortTitle2: 'v1',
   appSlogan: '... fa ny fahasoavana sy ny fahamarinana kosa dia tonga tamin’ ny alalan’ i Jesosy Kristy - Jaona 1:17',
   continueButton: 'TOHIZANA',

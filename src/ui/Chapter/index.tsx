@@ -1,4 +1,4 @@
-import { Box, Card, CardActionArea, CardContent, CardHeader, Stack, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, CardHeader, Stack, useTheme } from '@mui/material';
 import { useActiveChapter } from './useActiveChapter';
 import AppContainer from '../widgets/AppContainer';
 import { TeachingSection } from '../../clients/fv1';
@@ -59,6 +59,7 @@ export default function ChapterScreen() {
 function SectionCard({ i, section }: { section: TeachingSection; i: number }) {
   const { activeAudioId, play } = useAudioPlayer();
   const isPlaying = section.audioId === activeAudioId;
+  const { palette } = useTheme();
   return (
     <Card>
       <CardActionArea onClick={() => play(section.audioId)}>
@@ -69,10 +70,18 @@ function SectionCard({ i, section }: { section: TeachingSection; i: number }) {
         />
       </CardActionArea>
       <CardContent>
-        <div data-cy={`SectionVerses:${i}`}>
+        <Box
+          data-cy={`SectionVerses:${i}`}
+          paddingLeft={1}
+          sx={{
+            borderLeft: `2px solid ${isPlaying ? palette.secondary.main : palette.primary.main}`,
+          }}
+        >
           <Markdown>{section.verses}</Markdown>
+        </Box>
+        <div data-cy={`SectionComment:${i}`}>
+          <Markdown>{section.comment}</Markdown>
         </div>
-        <Typography data-cy={`SectionComment:${i}`}>{section.comment}</Typography>
       </CardContent>
     </Card>
   );

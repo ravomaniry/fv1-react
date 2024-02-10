@@ -1,8 +1,9 @@
-import { AppBar as MuiAppBar, Stack, Toolbar, Typography, useTheme } from '@mui/material';
+import { Avatar, AppBar as MuiAppBar, Stack, Toolbar, Typography, useTheme } from '@mui/material';
 import ResponsivePadding from './ResponsivePadding';
 import { useAppTexts } from '../../di/redux';
 import UserMenu from './UserMenu';
 import WhiteHelpButton from './WhiteHelpButton';
+import { Link } from 'react-router-dom';
 
 export default function AppBar() {
   const texts = useAppTexts();
@@ -16,13 +17,23 @@ export default function AppBar() {
             direction='row'
             alignItems='end'
           >
+            <Link to='/'>
+              <Avatar>
+                <img
+                  width='110%'
+                  src='/icon.png'
+                  alt='logo'
+                />
+              </Avatar>
+            </Link>
             <Typography
+              marginLeft={2}
               color='white'
               fontWeight='bold'
               fontSize={20}
               fontFamily='Jetbrains Mono, monospace'
             >
-              {texts.shortTitle1}
+              {texts.title1}
             </Typography>
             <Typography
               color='white'

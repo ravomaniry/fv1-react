@@ -144,6 +144,7 @@ function QuestionField({
   return (
     <Box>
       <Divider />
+      <Box marginBottom={1} />
       <FormControl>
         <FormLabel data-cy={`Question:${question.key}`}>
           {index + 1}. {question.question}

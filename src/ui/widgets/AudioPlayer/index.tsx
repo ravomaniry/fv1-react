@@ -1,8 +1,9 @@
-import { Box, CircularProgress, Divider, IconButton, Stack } from '@mui/material';
+import { Box, CircularProgress, Divider, IconButton, Stack, useTheme } from '@mui/material';
 import { useAudioPlayer } from './useAudioPlayer';
 import { Close } from '@mui/icons-material';
 
 export default function AudioPlayer() {
+  const { palette } = useTheme();
   const { activeAudioId, activeAudioUrl, close, onError } = useAudioPlayer();
   if (!activeAudioId) {
     return null;
@@ -27,7 +28,9 @@ export default function AudioPlayer() {
             alignItems='center'
             width='100%'
             maxWidth={600}
-            padding={1}
+            margin={1}
+            paddingRight={1}
+            sx={{ borderRadius: 24, backgroundColor: palette.primary.light }}
           >
             <audio
               controls
@@ -37,14 +40,13 @@ export default function AudioPlayer() {
               src={activeAudioUrl}
               data-cy='AudioPlayer'
             />
-            <div>
-              <IconButton
-                onClick={close}
-                size='small'
-              >
-                <Close color='secondary' />
-              </IconButton>
-            </div>
+            <IconButton
+              onClick={close}
+              size='small'
+              sx={{ marginLeft: 0 }}
+            >
+              <Close sx={{ color: 'black' }} />
+            </IconButton>
           </Stack>
         ) : (
           <CircularProgress />

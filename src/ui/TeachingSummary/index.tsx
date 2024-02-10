@@ -56,6 +56,7 @@ export default function TeachingSummaryScreen() {
                     isDone={isChapterDone(active, i)}
                   />
                 ))}
+                <Divider />
               </MenuList>
             </Box>
             <ContinueButton onClick={onContinue} />

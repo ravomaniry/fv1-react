@@ -78,7 +78,7 @@ export function updateProgress(
   };
   return {
     ...progress,
-    clientTimestamp: new Date().getTime(),
+    clientTimestamp: Math.floor(new Date().getTime() / 1000),
     scores: nextScores,
   };
 }

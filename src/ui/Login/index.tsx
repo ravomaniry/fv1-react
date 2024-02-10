@@ -29,26 +29,26 @@ export default function LoginScreen() {
           onSubmit={onSubmit}
         />
         <Typography
+          marginTop={1}
           component='div'
           variant='caption'
         >
           {texts.noAccountYet}
         </Typography>
-        <Link to={routes.register}>
-          <Button
-            disabled={disabled}
-            variant='outlined'
-            data-cy='RegisterButton'
-          >
-            {texts.createAccount}
-          </Button>
-        </Link>
-        <Typography
-          component='div'
-          variant='caption'
+        <Box
+          marginTop={1}
+          marginBottom={1}
         >
-          {texts.or}
-        </Typography>
+          <Link to={routes.register}>
+            <Button
+              disabled={disabled}
+              variant='outlined'
+              data-cy='RegisterButton'
+            >
+              {texts.createAccount}
+            </Button>
+          </Link>
+        </Box>
         <Button
           disabled={disabled}
           variant='outlined'

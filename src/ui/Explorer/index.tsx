@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useAppSelector, useAppTexts } from '../../di/redux';
 import AppContainer from '../widgets/AppContainer';
 import { useLoadNewTeachings } from './hooks';
@@ -31,9 +31,16 @@ export default function ExplorerScreen() {
 function NoDataMessage() {
   const texts = useAppTexts();
   return (
-    <Stack justifyContent='center'>
+    <div>
       <Typography data-cy='NoDataMessage'>{texts.noNewTeaching}</Typography>
-      <Button href='/'>{texts.close}</Button>
-    </Stack>
+      <Box textAlign='center'>
+        <Button
+          variant='contained'
+          href='/'
+        >
+          {texts.close}
+        </Button>
+      </Box>
+    </div>
   );
 }
