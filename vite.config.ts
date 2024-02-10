@@ -7,5 +7,8 @@ export default defineConfig({
     port: 3654,
     host: '127.0.0.1',
   },
+  build: {
+    target: 'es2015',
+  },
   plugins: [react()],
 });
