@@ -1,6 +1,5 @@
 import HelpButton from '../widgets/HelpButton';
 import { useAppTexts } from '../../di/redux';
-import LoginError from '../widgets/LoginError';
 import HomePageContainer from '../widgets/HomePageContainer';
 import { Box, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -57,7 +56,6 @@ export default function LoginScreen() {
         >
           {texts.continueAsGuest}
         </Button>
-        <LoginError />
       </Box>
     </HomePageContainer>
   );
