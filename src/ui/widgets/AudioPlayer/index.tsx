@@ -1,11 +1,20 @@
 import { Box, CircularProgress, Divider, IconButton, Stack, useTheme } from '@mui/material';
 import { useAudioPlayer } from './useAudioPlayer';
 import { Close } from '@mui/icons-material';
+import { useRef } from 'react';
 
 export default function AudioPlayer() {
   const { palette } = useTheme();
+  const ref = useRef<HTMLAudioElement | null>(null);
   const { activeAudioId, activeAudioUrl, close, onError } = useAudioPlayer();
+
   if (!activeAudioId) {
+    if (ref.current) {
+      // close audio notification
+      ref.current.src = '';
+      ref.current.load();
+      ref.current = null;
+    }
     return null;
   }
   return (
@@ -35,6 +44,7 @@ export default function AudioPlayer() {
             <audio
               controls
               autoPlay
+              ref={ref}
               onError={onError}
               style={{ width: '100%', height: 48 }}
               src={activeAudioUrl}
