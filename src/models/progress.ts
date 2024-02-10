@@ -1,4 +1,4 @@
-import { ProgressEntity, ProgressScore, TeachingEntity } from '../clients/fv1';
+import { ProgressEntity, ProgressScore, TeachingEntity, TeachingQuestion } from '../clients/fv1';
 
 export interface UiProgressModel {
   readonly id: number;
@@ -6,6 +6,13 @@ export interface UiProgressModel {
   readonly scores: ProgressScore[];
   readonly clientTimestamp: number;
   readonly completionPercentage: number;
+}
+
+export interface WrongAnswer {
+  index: number;
+  question: string;
+  givenAnswer: string;
+  correctAnswer: string;
 }
 
 export function newUiProgressModel(raw: ProgressEntity): UiProgressModel {
@@ -37,4 +44,45 @@ export function getNextChapterIndex(progress: UiProgressModel) {
     }
   }
   return scores.length < teaching.chapters.length ? scores.length : 0;
+}
+
+export function calculateWrongAnswers(questions: TeachingQuestion[], value: Record<string, string>): WrongAnswer[] {
+  const wrongAnswers: WrongAnswer[] = [];
+  questions.forEach((question, index) => {
+    const givenAnswer = question.options[Number(value[question.key])];
+    const correctAnswer = question.options[question.responseIndex];
+    if (givenAnswer != correctAnswer) {
+      wrongAnswers.push({
+        index,
+        question: question.question,
+        givenAnswer,
+        correctAnswer,
+      });
+    }
+  });
+  return wrongAnswers;
+}
+
+export function updateProgress(
+  progress: UiProgressModel,
+  chapterIndex: number,
+  wrongAnswers: WrongAnswer[],
+): UiProgressModel {
+  const questionsCount = progress.teaching.chapters[chapterIndex].questions.length;
+  const nextScores = progress.scores.slice();
+  while (nextScores.length <= chapterIndex) {
+    nextScores.push({ correctAnswersPercentage: 0 });
+  }
+  nextScores[chapterIndex] = {
+    correctAnswersPercentage: roundedPercentage(questionsCount - wrongAnswers.length, questionsCount),
+  };
+  return {
+    ...progress,
+    clientTimestamp: new Date().getTime(),
+    scores: nextScores,
+  };
+}
+
+function roundedPercentage(n: number, total: number): number {
+  return Math.round(((100 * n) / total) * 100) / 100;
 }

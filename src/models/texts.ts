@@ -22,6 +22,7 @@ export interface AppTexts {
   errorNotConnected: string;
   errorDuplicateUsername: string;
   errorWeakPassword: string;
+  errorProgressNotSaved: string;
   noNewTeaching: string;
   username: string;
   password: string;
@@ -52,7 +53,7 @@ export const mgTexts: AppTexts = {
   continueButton: 'TOHIZANA',
   login: 'HIDITRA',
   loginTitle: "Hiditra amin'ny kaontinao:",
-  score: 'Isa',
+  score: 'Valiny marina',
   quizHelp: 'Valio ireto fanontaniana manaraka ireto ' + 'araka ny fahazoanao ny fampianarana:',
   requiredFieldMessage: 'Valio ity fanontaniana ity azafady.',
   explorerHelp:
@@ -72,7 +73,8 @@ export const mgTexts: AppTexts = {
     'Avereno azafady, na manokafa kaonty vaovao raha mbola tsy manana kaonty ianao.',
   errorNotConnected: 'Misy olana ny kaontinao fa akatony ary miverena miditra azafady.',
   errorDuplicateUsername: 'Efa misy io anarana io. Soloy hafa azafady.',
-  errorWeakPassword: 'Tsotra loatra ily teny miafina nataonao. ' + 'Ataovy lavalava azafady.',
+  errorWeakPassword: 'Tsotra loatra ily teny miafina nataonao. Ataovy lavalava azafady.',
+  errorProgressNotSaved: 'Tsy voatahiry valim-panontaniana nomenao. Mety misy olana ny internet.',
   username: 'Anarana',
   password: 'Teny miafina',
   continueAsGuest: 'HAMPIASA KAONTY TSY MISY ANARANA',

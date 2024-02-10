@@ -36,6 +36,7 @@ export const theme = createTheme({
       styleOverrides: {
         h2: {
           fontSize: 24,
+          textAlign: 'center',
         },
       },
     },

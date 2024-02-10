@@ -112,6 +112,57 @@ describe('ChapterScreen', () => {
     cy.getByDataCy('AppError').should('not.exist');
     // Quiz
     cy.getByDataCy('ContinueButton').click();
+    cy.getByDataCy('AudioPlayer').should('not.exist');
     // Render questions
+    cy.getByDataCy('QuizScreen').should('exist');
+    cy.getByDataCy('Question:q1').should('have.text', '1. Q1?');
+    cy.getByDataCy('Question:q2').should('have.text', '2. Q2?');
+    cy.getByDataCy('Question:q3').should('have.text', '3. Q3?');
+    // Fill form
+    cy.getByDataCy('Option:q1:c1').click();
+    // form validation
+    cy.getByDataCy('ContinueButton').click();
+    cy.getByDataCy('FieldError:q1').should('not.exist');
+    cy.getByDataCy('FieldError:q2').should('exist');
+    cy.getByDataCy('FieldError:q3').should('exist');
+    // fill missing questions and submit
+    cy.intercept('PUT', '/api/progress/save/20', { statusCode: 200, body: {} });
+    cy.getByDataCy('Option:q2:c22').click();
+    cy.getByDataCy('Option:q3:c3').click();
+    cy.getByDataCy('ContinueButton').click();
+    // Score screen
+    cy.getByDataCy('ScoreScreen').should('exist');
+    cy.getByDataCy('Score').should('have.text', `${mgTexts.score}: 1 / 3`);
+    cy.getByDataCy('WrongAnswer:0').should('not.exist');
+    cy.getByDataCy('WrongAnswer:1').should('exist').should('contain.text', '2. Q2?');
+    cy.getByDataCy('GivenAnswer:1').should('exist').should('have.text', 'c22');
+    cy.getByDataCy('CorrectAnswer:1').should('exist').should('have.text', 'c2');
+    cy.getByDataCy('WrongAnswer:2').should('exist').should('contain.text', '3. Q3?');
+    cy.getByDataCy('GivenAnswer:2').should('exist').should('have.text', 'c3');
+    cy.getByDataCy('CorrectAnswer:2').should('exist').should('have.text', 'c33');
+    // TODO: assert request body
+    // Go to next chapter
+    cy.getByDataCy('ContinueButton').click();
+    // reset audio player state
+    cy.getByDataCy('AudioPlayer').should('not.exist');
+    cy.getByDataCy('ChapterTitle').should('have.text', 'TC23');
+    cy.getByDataCy('SectionTitle:0').should('have.text', 'SC231 title');
+    // Play audio
+    cy.intercept('GET', '/api/audio/url/3', { body: { url: '/1-second-of-silence.mp3' }, statusCode: 200 });
+    cy.getByDataCy('SectionTitle:0').click();
+    cy.getByDataCy('AudioPlayer').should('have.attr', 'src', '/1-second-of-silence.mp3');
+    // Go to quiz
+    cy.getByDataCy('ContinueButton').click();
+    // Fill and submit Quiz
+    cy.getByDataCy('Option:a:x').click();
+    cy.getByDataCy('ContinueButton').click();
+    // Teaching is finished -> Continue goes to summary
+    cy.getByDataCy('ContinueButton').click();
+    cy.getByDataCy('TeachingSummaryScreen').should('exist');
+    cy.getByDataCy('TSTitle').should('have.text', 'T2');
+    // Update statistics
+    cy.getByDataCy('DoneIcon:0').should('exist');
+    cy.getByDataCy('DoneIcon:1').should('exist');
+    cy.getByDataCy('DoneIcon:2').should('exist');
   });
 });

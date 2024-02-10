@@ -1,4 +1,4 @@
-import { Box, Card, CardActionArea, CardContent, CardHeader, CircularProgress, Stack, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import { useActiveChapter } from './useActiveChapter';
 import AppContainer from '../widgets/AppContainer';
 import { TeachingSection } from '../../clients/fv1';
@@ -8,38 +8,51 @@ import { useAudioPlayer } from '../widgets/AudioPlayer/useAudioPlayer';
 import AudioPlayer from '../widgets/AudioPlayer';
 import ContinueButton from '../widgets/ContinueButton';
 import { routes } from '../routes';
+import WrapInLoader from '../widgets/WrapInLoader';
+import ChapterTitle from './ChapterTitle';
+import { useAppDispatch } from '../../di/redux';
+import { useEffect } from 'react';
+import { closeAudioPlayer } from '../../di/redux/audioPlayerSlice';
+
+function useAutoClosePlayer() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    return () => {
+      console.log('Close audio player');
+      dispatch(closeAudioPlayer());
+    };
+  }, [dispatch]);
+}
 
 export default function ChapterScreen() {
+  useAutoClosePlayer();
   const active = useActiveChapter();
-  if (!active) {
-    return <CircularProgress />;
-  }
   return (
-    <>
-      <AppContainer dataCy='ChapterScreen'>
-        <Stack direction='column'>
-          <Typography
-            variant='h2'
-            data-cy='ChapterTitle'
-          >
-            {active.chapter.title}
-          </Typography>
-          {active.chapter.sections.map((section, i) => (
-            <SectionCard
-              i={i}
-              key={i}
-              section={section}
-            />
-          ))}
-          <ContinueButton href={routes.quiz} />
-          <Box
-            data-comment='to compensate the height of the audio player'
-            height={60}
-          />
-        </Stack>
-      </AppContainer>
-      <AudioPlayer key='audioPlayer' />
-    </>
+    <WrapInLoader
+      isReady={!!active}
+      builder={() => (
+        <>
+          <AppContainer dataCy='ChapterScreen'>
+            <Stack direction='column'>
+              <ChapterTitle active={active} />
+              {active?.chapter.sections.map((section, i) => (
+                <SectionCard
+                  i={i}
+                  key={i}
+                  section={section}
+                />
+              ))}
+              <ContinueButton href={routes.quiz} />
+              <Box
+                data-comment='to compensate the height of the audio player'
+                height={60}
+              />
+            </Stack>
+          </AppContainer>
+          <AudioPlayer key='audioPlayer' />
+        </>
+      )}
+    />
   );
 }
 

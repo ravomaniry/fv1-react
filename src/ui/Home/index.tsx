@@ -55,7 +55,7 @@ function RegularScreen({
   newTeachings,
 }: {
   progresses: UiProgressModel[];
-  newTeachings: NewTeachingRespDto[] | null;
+  newTeachings: NewTeachingRespDto[] | undefined;
 }) {
   const texts = useAppTexts();
   return (

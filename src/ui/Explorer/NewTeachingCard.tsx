@@ -19,8 +19,8 @@ function useStartTeaching(teaching: NewTeachingRespDto) {
 
   return useCallback(async () => {
     // set to null to display loader
-    dispatch(setProgresses(null));
-    dispatch(setNewTeachings(null));
+    dispatch(setProgresses(undefined));
+    dispatch(setNewTeachings(undefined));
     try {
       const newProgress = await apiClient.progress.start({ teachingId: teaching.id });
       dispatch(

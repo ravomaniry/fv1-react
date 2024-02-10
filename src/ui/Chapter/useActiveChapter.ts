@@ -3,8 +3,11 @@ import { useActiveProgress } from '../TeachingSummary/hooks';
 import { ChapterRouteParams } from '../routes';
 import { useMemo } from 'react';
 import { ProgressScore, TeachingChapter, TeachingEntity } from '../../clients/fv1';
+import { UiProgressModel } from '../../models/progress';
 
 export type ActiveChapter = {
+  progress: UiProgressModel;
+  chapterIndex: number;
   teaching: TeachingEntity;
   chapter: TeachingChapter;
   score: ProgressScore | undefined;
@@ -17,6 +20,8 @@ export function useActiveChapter(): ActiveChapter | null {
     const i = Number(chapterIndex);
     if (progress && progress.teaching.chapters[i]) {
       return {
+        progress,
+        chapterIndex: i,
         teaching: progress.teaching,
         chapter: progress.teaching.chapters[i],
         score: progress.scores[i],
