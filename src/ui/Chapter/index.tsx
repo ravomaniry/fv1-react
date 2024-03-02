@@ -74,7 +74,9 @@ function SectionCard({ i, section }: { section: TeachingSection; i: number }) {
           data-cy={`SectionVerses:${i}`}
           paddingLeft={1}
           sx={{
-            borderLeft: `2px solid ${isPlaying ? palette.secondary.main : palette.primary.main}`,
+            border: '1px solid #ddd',
+            borderRadius: 1,
+            borderLeft: `4px solid ${isPlaying ? palette.secondary.main : palette.primary.main}`,
           }}
         >
           <Markdown>{section.verses}</Markdown>
