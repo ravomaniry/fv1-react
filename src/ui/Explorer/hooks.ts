@@ -1,9 +1,13 @@
 import { useAppContext } from '../../di/appContext/useAppContext';
-import { useAppDispatch, useAppTexts } from '../../di/redux';
 import { setError } from '../../di/redux/appSlice';
-import { setNewTeachings } from '../../di/redux/browserSlice';
 import { getErrorMessage } from '../../services/api/mapError';
 import { useCallOnMount } from '../hooks/useCallOnMount';
+import { useAppDispatch, useAppSelector, useAppTexts } from '../../di/redux';
+import { setNewTeachings, setProgresses } from '../../di/redux/browserSlice';
+import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { newUiProgressModel } from '../../models/progress';
+import { NewTeachingRespDto } from '../../clients/fv1';
 
 export function useLoadNewTeachings() {
   const dispatch = useAppDispatch();
@@ -19,4 +23,36 @@ export function useLoadNewTeachings() {
       dispatch(setError(getErrorMessage(error, texts)));
     }
   });
+}
+
+export function useStartTeaching() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { apiClient } = useAppContext();
+  const texts = useAppTexts();
+  const progresses = useAppSelector((s) => s.browser.progresses);
+  const newTeachings = useAppSelector((s) => s.browser.newTeachings);
+
+  return useCallback(
+    async (teaching: NewTeachingRespDto) => {
+      // set to null to display loader
+      dispatch(setProgresses(undefined));
+      dispatch(setNewTeachings(undefined));
+      try {
+        const newProgress = await apiClient.progress.start({ teachingId: teaching.id });
+        dispatch(
+          setProgresses([
+            ...(progresses?.filter((p) => p.teaching.id !== teaching.id) ?? []),
+            newUiProgressModel(newProgress.data),
+          ]),
+        );
+        navigate(`/teaching/${teaching.id}`);
+      } catch (error) {
+        dispatch(setError(getErrorMessage(error, texts)));
+        dispatch(setProgresses(progresses));
+      }
+      dispatch(setNewTeachings(newTeachings));
+    },
+    [apiClient.progress, dispatch, navigate, newTeachings, progresses, texts],
+  );
 }

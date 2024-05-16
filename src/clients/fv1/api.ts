@@ -20,7 +20,10 @@ import globalAxios from 'axios';
 import {
   DUMMY_BASE_URL,
   assertParamExists,
+  setApiKeyToObject,
+  setBasicAuthToObject,
   setBearerAuthToObject,
+  setOAuthToObject,
   setSearchParams,
   serializeDataIfNeeded,
   toPathString,
@@ -528,6 +531,44 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
     /**
      *
      * @summary
+     * @param {object} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    convertToNamedAccount: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+      // verify required parameter 'body' is not null or undefined
+      assertParamExists('convertToNamedAccount', 'body', body);
+      const localVarPath = `/api/auth/convert-to-named-account`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearer required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+      localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration);
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary
      * @param {LoginRequestDto} loginRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -726,6 +767,28 @@ export const AuthApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary
+     * @param {object} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async convertToNamedAccount(
+      body: object,
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.convertToNamedAccount(body, options);
+      const index = configuration?.serverIndex ?? 0;
+      const operationBasePath = operationServerMap['AuthApi.convertToNamedAccount']?.[index]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, operationBasePath || basePath);
+    },
+    /**
+     *
+     * @summary
      * @param {LoginRequestDto} loginRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -842,6 +905,16 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     /**
      *
      * @summary
+     * @param {object} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    convertToNamedAccount(body: object, options?: any): AxiosPromise<void> {
+      return localVarFp.convertToNamedAccount(body, options).then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
      * @param {LoginRequestDto} loginRequestDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -897,6 +970,20 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class AuthApi extends BaseAPI {
+  /**
+   *
+   * @summary
+   * @param {object} body
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AuthApi
+   */
+  public convertToNamedAccount(body: object, options?: RawAxiosRequestConfig) {
+    return AuthApiFp(this.configuration)
+      .convertToNamedAccount(body, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
   /**
    *
    * @summary
@@ -1500,6 +1587,38 @@ export const TeachingApiAxiosParamCreator = function (configuration?: Configurat
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getSample: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/teaching/sample`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearer required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -1530,6 +1649,26 @@ export const TeachingApiFp = function (configuration?: Configuration) {
           configuration,
         )(axios, operationBasePath || basePath);
     },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getSample(
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NewTeachingRespDto>>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getSample(options);
+      const index = configuration?.serverIndex ?? 0;
+      const operationBasePath = operationServerMap['TeachingApi.getSample']?.[index]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, operationBasePath || basePath);
+    },
   };
 };
 
@@ -1548,6 +1687,15 @@ export const TeachingApiFactory = function (configuration?: Configuration, baseP
      */
     getNew(options?: any): AxiosPromise<Array<NewTeachingRespDto>> {
       return localVarFp.getNew(options).then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getSample(options?: any): AxiosPromise<Array<NewTeachingRespDto>> {
+      return localVarFp.getSample(options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -1569,6 +1717,19 @@ export class TeachingApi extends BaseAPI {
   public getNew(options?: RawAxiosRequestConfig) {
     return TeachingApiFp(this.configuration)
       .getNew(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TeachingApi
+   */
+  public getSample(options?: RawAxiosRequestConfig) {
+    return TeachingApiFp(this.configuration)
+      .getSample(options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

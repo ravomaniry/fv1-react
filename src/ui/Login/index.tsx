@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { routes } from '../routes';
 import LoginForm from './LoginForm';
 import { useAuth } from '../hooks/useAuth';
+import { SampleTeachings } from './SampleTeachings';
 
 export default function LoginScreen() {
   const texts = useAppTexts();
@@ -14,6 +15,7 @@ export default function LoginScreen() {
     <HomePageContainer
       dataCy='LoginScreen'
       fab={<HelpButton />}
+      contentAboveCard={<SampleTeachings />}
     >
       <Box textAlign='center'>
         <Typography

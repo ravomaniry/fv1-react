@@ -8,6 +8,7 @@ interface Props {
   fab: ReactNode;
   dataCy: string;
   userMenu?: boolean;
+  contentAboveCard?: ReactNode;
 }
 
 function Header({ userMenu }: { userMenu: boolean | undefined }) {
@@ -94,7 +95,13 @@ function Header({ userMenu }: { userMenu: boolean | undefined }) {
   );
 }
 
-export default function HomePageContainer({ children, fab, userMenu, dataCy }: PropsWithChildren<Props>) {
+export default function HomePageContainer({
+  children,
+  fab,
+  userMenu,
+  dataCy,
+  contentAboveCard,
+}: PropsWithChildren<Props>) {
   return (
     <Box
       display='flex'
@@ -108,6 +115,7 @@ export default function HomePageContainer({ children, fab, userMenu, dataCy }: P
         marginTop={2}
       >
         <ResponsivePadding>
+          {contentAboveCard}
           <Card>
             <CardContent>
               <Stack

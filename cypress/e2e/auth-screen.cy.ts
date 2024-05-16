@@ -8,8 +8,9 @@ describe('Auth screen', () => {
 
   beforeEach(() => {
     cy.clock();
-    cy.intercept('GET', '/api/progress', { statusCode: 200, body: [] }).as('login');
-    cy.intercept('GET', '/api/teaching/new', { statusCode: 200, body: [] }).as('login');
+    cy.intercept('GET', '/api/progress', { statusCode: 200, body: [] });
+    cy.intercept('GET', '/api/teaching/new', { statusCode: 200, body: [] });
+    cy.intercept('GET', '/api/teaching/sample', { statusCode: 200, body: [] });
     cy.visit('/');
     cy.tick(100);
   });
